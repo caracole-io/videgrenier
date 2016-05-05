@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Réservations{% endblock %}
+
+{% block content %}
+<h1>Réservations</h1>
+
+<table class="table table-striped">
+  <tr><th>Caracolien</th><th class="right">Prix</th><th>Accepté</th></tr>
+  {% for object in object_list %}
+  <tr><td>{{ object }}</td><td class="euro">{{ object.prix }}</td><td>{{ object.accepte|yesno:"✔,✘" }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

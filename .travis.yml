@@ -1,0 +1,15 @@
+language: python
+sudo: required
+python:
+  - 3.5
+install:
+  - pip install -r requirements_dev.txt
+  - sudo mkdir -p /etc/django/caracole
+  - sudo chmod -R 777 /etc/django
+  - echo pipo > /etc/django/caracole/secret_key.txt
+  - echo pipo > /etc/django/caracole/email_password
+script:
+  - coverage run manage.py test
+  - flake8 .
+after_success:
+  - coveralls

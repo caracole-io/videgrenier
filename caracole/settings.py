@@ -29,14 +29,14 @@ if not CONF_DIR.is_dir():
 
 SECRET_KEY = (CONF_DIR / "secret_key.txt").open().read().strip()
 
-DEBUG, INTEGRATION, PROD = False, False, False
+DEBUG, PROD = False, False
 
 if (CONF_DIR / "prod").is_file():
     PROD = True
 else:
     DEBUG = True
 
-EMAIL_SUBJECT_PREFIX = ("[%s Dev] " if DEBUG or INTEGRATION else "[%s] ") % PROJECT_VERBOSE
+EMAIL_SUBJECT_PREFIX = ("[%s Dev] " if DEBUG else "[%s] ") % PROJECT_VERBOSE
 
 EMAIL_USE_SSL = True
 EMAIL_HOST = "mail.gandi.net"
@@ -175,3 +175,5 @@ if 'bootstrap3' in INSTALLED_APPS:
         BOOTSTRAP3["base_url"] = "/static/"
     else:
         BOOTSTRAP3["jquery_url"] = "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+
+LOGIN_REDIRECT_URL = '/'
