@@ -29,13 +29,14 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
-            <li>Bienvenue, {{ user }} !</li>
-            <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+            <p class="navbar-text">Bienvenue, {{ user }} !</p>
+            <li><a href="{% url 'auth_logout' %}">Se déconnecter</a></li>
             {% if request.user.is_superuser %}
             <li><a href="/admin/">Admin</a></li>
             {% endif %}
             {% else %}
-            <li><a href="{% url 'login' %}">Se connecter</a></li>
+            <li><a href="{% url 'auth_login' %}">Se connecter</a></li>
+            <li><a href="{% url 'registration_register' %}">Créer un compte</a></li>
             {% endif %}
           </ul>
         </div>

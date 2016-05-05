@@ -39,7 +39,7 @@ else:
 EMAIL_SUBJECT_PREFIX = ("[%s Dev] " if DEBUG else "[%s] ") % PROJECT_VERBOSE
 
 EMAIL_USE_SSL = True
-EMAIL_HOST = "mail.gandi.net"
+EMAIL_HOST = "mail.gandi.net" if SELF_MAIL else "SSL0.OVH.NET"
 EMAIL_PORT = 465
 EMAIL_HOST_USER = "%s@%s" % (MAIL_USER, ALLOWED_HOSTS[0] if SELF_MAIL else "totheweb.fr")
 SERVER_EMAIL = "%s+%s@%s" % (MAIL_USER, PROJECT, ALLOWED_HOSTS[0] if SELF_MAIL else "totheweb.fr")
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'registration',
     'videgrenier',
 ]
 
@@ -175,5 +176,9 @@ if 'bootstrap3' in INSTALLED_APPS:
         BOOTSTRAP3["base_url"] = "/static/"
     else:
         BOOTSTRAP3["jquery_url"] = "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+
+if 'registration' in INSTALLED_APPS:
+    ACCOUNT_ACTIVATION_DAYS = 7
+    REGISTRATION_AUTO_LOGIN = True
 
 LOGIN_REDIRECT_URL = '/'
