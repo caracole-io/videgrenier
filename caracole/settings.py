@@ -31,12 +31,7 @@ if not CONF_DIR.is_dir():
 
 SECRET_KEY = (CONF_DIR / "secret_key.txt").open().read().strip()
 
-DEBUG, PROD = False, False
-
-if (CONF_DIR / "prod").is_file():
-    PROD = True
-else:
-    DEBUG = True
+DEBUG = not (CONF_DIR / "prod").is_file()
 
 EMAIL_SUBJECT_PREFIX = ("[%s Dev] " if DEBUG else "[%s] ") % PROJECT_VERBOSE
 

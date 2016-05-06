@@ -2,12 +2,19 @@ language: python
 sudo: required
 python:
   - 3.5
+services:
+  - postgresql
 install:
   - pip install -r requirements_dev.txt
   - sudo mkdir -p /etc/django/caracole
   - sudo chmod -R 777 /etc/django
   - echo pipo > /etc/django/caracole/secret_key.txt
   - echo pipo > /etc/django/caracole/email_password
+  - echo pipo > /etc/django/caracole/db_password.txt
+before_script:
+  - psql -c "create user caracole with password 'pipo';" -U postgres
+  - psql -c "alter user caracole createdb;" -U postgres
+  - psql -c "create database caracole owner caracole;" -U postgres
 script:
   - coverage run manage.py test
   - flake8 .

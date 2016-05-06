@@ -20,10 +20,6 @@ class VideGrenierTests(TestCase):
 
     # MODELS
 
-    def test_reservation_str(self):
-        self.assertEqual(str(Reservation.objects.first()), 'a')
-
     def test_reservation_prix(self):
-        a, b = Reservation.objects.all()
-        self.assertEqual(a.prix(), 12)
-        self.assertEqual(b.prix(), 14)
+        for reservation in Reservation.objects.all():
+            self.assertEqual(reservation.prix(), 12 if str(reservation) == 'a' else 14)
