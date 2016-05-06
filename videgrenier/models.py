@@ -16,9 +16,9 @@ class Reservation(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if not settings.DEBUG:
-            self.caracolien.user.email_user('[Caracole][Vide Grenier] Votre réservation', 'Bonjour\n'
+            self.caracolien.user.email_user('[Caracole][Vide Grenier] Votre réservation', 'Bonjour,\n\n'
                                             'Votre réservation au vide grenier est désormais %s.' % self.status())
-            mail_managers('[Caracole][Vide Grenier] Votre réservation', 'Bonjour\n',
+            mail_managers('[Vide Grenier] Réservation', 'Bonjour,\n\n'
                           'La réservation de %s est désormais %s.' % (self, self.status()))
 
     def get_absolute_url(self):
