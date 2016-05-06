@@ -14,10 +14,9 @@ class VideGrenierTests(TestCase):
         for guy in 'abcd':
             user = User.objects.create_user(guy, email='%s@example.org' % guy, password=guy)
             if guy == 'a':
-                caracolien = Caracolien.objects.get(user=user)
-                caracolien.adhesion = date.today() - timedelta(days=8)
-                caracolien.save()
-                Reservation.objects.create(caracolien=caracolien)
+                Reservation.objects.create(caracolien=user.caracolien)
+                user.caracolien.adhesion = date.today() - timedelta(days=8)
+                user.caracolien.save()
             elif guy == 'b':
                 Reservation.objects.create(caracolien=user.caracolien)
             elif guy == 'd':

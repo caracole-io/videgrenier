@@ -16,7 +16,6 @@ class ReservationListView(StaffRequiredMixin, ListView):
 class ReservationCreateView(LoginRequiredMixin, CreateView):
     model = Reservation
     fields = []
-    success_url = reverse_lazy('videgrenier:reservation-detail')
 
     def form_valid(self, form):
         form.instance.caracolien = self.request.user.caracolien
