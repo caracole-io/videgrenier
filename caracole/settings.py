@@ -165,9 +165,9 @@ LOGGING = {
 if (Path(BASE_DIR) / PROJECT / 'context_processors.py').is_file():
     TEMPLATES[0]['OPTIONS']['context_processors'].append('%s.context_processors.%s' % (PROJECT, PROJECT))
 
-if not DEBUG:
-    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
-    RAVEN_CONFIG = {"dsn": (CONF_DIR / "raven").open().read().strip()}
+# if not DEBUG:
+    # INSTALLED_APPS.append('raven.contrib.django.raven_compat')
+    # RAVEN_CONFIG = {"dsn": (CONF_DIR / "raven").open().read().strip()}
 
 if 'bootstrap3' in INSTALLED_APPS:
     BOOTSTRAP3 = {
