@@ -13,3 +13,7 @@ h1 {
     border-bottom: 1px silver dashed;
 }
 
+h2 { text-align: center; }
+
+.table-condensed th { text-align: right; width: 50%; }
+

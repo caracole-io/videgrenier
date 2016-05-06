@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 from os.path import abspath, dirname, join
 from pathlib import Path
 
+from django.core.urlresolvers import reverse_lazy
+
 PROJECT = "caracole"
 PROJECT_VERBOSE = "Caracole"
 MAIL_USER = "majo"
@@ -184,4 +186,4 @@ if 'registration' in INSTALLED_APPS:
     ACCOUNT_ACTIVATION_DAYS = 7
     REGISTRATION_AUTO_LOGIN = True
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = reverse_lazy('profil')

@@ -7,7 +7,7 @@ from django.db import models
 
 class Caracolien(models.Model):
     user = models.OneToOneField(User)
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$')  # TODO: clean phone 0→+33, strip spaces, points, etc.
+    phone_regex = RegexValidator(regex=r'^\+\d{9,15}$')
     phone_number = models.CharField('téléphone', max_length=16, validators=[phone_regex], blank=True)
     adhesion = models.DateField('Date d’adhésion', blank=True, null=True)
     address = models.TextField(blank=True)
@@ -16,7 +16,7 @@ class Caracolien(models.Model):
         return str(self.user)
 
     def adherent(self):
-        return self.adhesion and date.today() - self.adhesion < timedelta(days=365)
+        return bool(self.adhesion and date.today() - self.adhesion < timedelta(days=365))
 
 
 def create_caracolien(sender, instance, created, **kwargs):

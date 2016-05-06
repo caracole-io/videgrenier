@@ -30,6 +30,7 @@
           <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
             <p class="navbar-text">Bienvenue, {{ user }} !</p>
+            <li><a href="{% url 'profil' %}">Mon profil</a></li>
             <li><a href="{% url 'auth_logout' %}">Se déconnecter</a></li>
             {% if request.user.is_staff %}
             <li><a href="/admin/">Admin</a></li>
