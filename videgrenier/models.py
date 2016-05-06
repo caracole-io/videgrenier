@@ -4,7 +4,7 @@ from caracole.models import Caracolien
 
 
 class Reservation(models.Model):
-    caracolien = models.ForeignKey(Caracolien)
+    caracolien = models.OneToOneField(Caracolien)
     accepte = models.NullBooleanField('accepté', default=None)
 
     def __str__(self):
