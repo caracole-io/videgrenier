@@ -10,12 +10,13 @@ from .models import Reservation
 
 class VideGrenierTests(TestCase):
     def setUp(self):
-        users = (User.objects.create_user(guy, email='%s@example.org' % guy, password=guy) for guy in 'ab')
-        caracoliens = [Caracolien(user=user) for user in users]
-        caracoliens[0].adhesion = date.today() - timedelta(days=8)
-        for caracolien in caracoliens:
-            caracolien.save()
-            Reservation(caracolien=caracolien).save()
+        for guy in 'ab':
+            User.objects.create_user(guy, email='%s@example.org' % guy, password=guy)
+        caracolien = Caracolien.objects.first()
+        caracolien.adhesion = date.today() - timedelta(days=8)
+        caracolien.save()
+        for caracolien in Caracolien.objects.all():
+            Reservation.objects.create(caracolien=caracolien)
 
     # MODELS
 

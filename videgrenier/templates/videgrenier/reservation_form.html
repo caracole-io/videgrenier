@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Vide grenier: réservation{% endblock %}
+
+{% block content %}
+<h1>Réserver votre place</h1>
+<form action="" method="post" class="form-horizontal">
+  {% csrf_token %}
+  {% buttons layout="horizontal" %}
+  <p class="text-center"><button type="submit" class="btn btn-primary">Réserver !</button></p>
+  {% endbuttons %}
+</form>
+{% endblock %}

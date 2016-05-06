@@ -6,9 +6,22 @@
 <h1>Réservations</h1>
 
 <table class="table table-striped">
-  <tr><th>Caracolien</th><th class="right">Prix</th><th>Accepté</th></tr>
+  <tr><th>Caracolien</th><th class="right">Prix</th><th>Status</th><th>Action</th></tr>
   {% for object in object_list %}
-  <tr><td>{{ object }}</td><td class="euro">{{ object.prix }}</td><td>{{ object.accepte|yesno:"✔,✘" }}</td></tr>
+  <tr>
+    <td>{{ object }}</td>
+    <td class="euro">{{ object.prix }}</td>
+    <td>{{ object.accepte|yesno:"✔,✘,?" }}</td>
+    <td>
+      {% if object.accepte != True %}
+      <a class="btn btn-success" href="{% url 'videgrenier:reservation-update' pk=object.pk accepte=1 %}">Accepter</a>
+      {% endif %}
+      {% if object.accepte != False %}
+      <a class="btn btn-danger" href="{% url 'videgrenier:reservation-update' pk=object.pk accepte=0 %}">Refuser</a>
+      {% endif %}
+    </td>
+
+  </tr>
   {% endfor %}
 </table>
 {% endblock %}

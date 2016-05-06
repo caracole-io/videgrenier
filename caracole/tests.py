@@ -8,10 +8,14 @@ from .models import Caracolien
 
 class CaracolienTests(TestCase):
     def setUp(self):
-        a, b, c = (User.objects.create_user(guy, email='%s@example.org' % guy, password=guy) for guy in 'abc')
-        Caracolien(user=a, phone_number='+33641452777', adhesion=date.today() - timedelta(days=100)).save()
-        Caracolien(user=b, adhesion=date.today() - timedelta(days=1000)).save()
-        Caracolien(user=c).save()
+        for guy in 'abc':
+            User.objects.create_user(guy, email='%s@example.org' % guy, password=guy)
+        a, b, c = Caracolien.objects.all()
+        a.phone_number = '+33641452777'
+        a.adhesion = date.today() - timedelta(days=100)
+        b.adhesion = date.today() - timedelta(days=1000)
+        a.save()
+        b.save()
 
     # MODELS
 

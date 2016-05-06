@@ -17,3 +17,10 @@ class Caracolien(models.Model):
 
     def adherent(self):
         return self.adhesion and date.today() - self.adhesion < timedelta(days=365)
+
+
+def create_caracolien(sender, instance, created, **kwargs):
+    if created:
+        Caracolien.objects.create(user=instance)
+
+models.signals.post_save.connect(create_caracolien, sender=User, weak=False, dispatch_uid='create_caracolien')

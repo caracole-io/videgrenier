@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Réservations{% endblock %}
+
+{% block content %}
+<h1>Votre Réservation</h1>
+
+<p>Votre réservation est {{ object.accepte|yesno:"acceptée,refusée,en cours de traitement" }}.</p>
+
+{% endblock %}
