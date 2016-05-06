@@ -32,15 +32,6 @@ class VideGrenierTests(TestCase):
 
     # VIEWS
 
-    def test_home_status(self):
-        self.assertEqual(self.client.get(reverse('videgrenier:home')).status_code, 302)
-        self.client.login(username='a', password='a')
-        self.assertEqual(self.client.get(reverse('videgrenier:home')).status_code, 302)
-        self.client.login(username='c', password='c')
-        self.assertEqual(self.client.get(reverse('videgrenier:home')).status_code, 302)
-        self.client.login(username='d', password='d')
-        self.assertEqual(self.client.get(reverse('videgrenier:home')).status_code, 302)
-
     def test_views_status(self):
         self.client.login(username='a', password='a')
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-create')).status_code, 200)

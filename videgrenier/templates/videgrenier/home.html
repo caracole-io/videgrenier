@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Vide Grenier{% endblock %}
+
+{% block content %}
+<h1>Vide Grenier</h1>
+
+<p>Vers une manifestation qui intègre un développement durable, solidaire et citoyen.</p>
+
+<h2>Objectifs de la manifestation</h2>
+
+<ul> <li>Faire circuler des objets</li> <li>Acheter moins cher</li>
+  <li>Aboutir à un projet collectif pour limiter l'impact sur l'environnnement et favoriser les initiaves citoyennes</li
+</ul>
+
+<h2>Informations pratiques</h2>
+
+<dl>
+  <dt>Date du vide grenier</dt><dd>26 juin 2016</dd>
+  <dt>Date de début des inscriptions à la MES</dt><dd>mercredi 11 mai de 12h à 19h</dd>
+  <dt>Date de fin des inscriptions</dt><dd>mercredi 22 juin à 19h</dd>
+  <dt>Téléphone</dt><dd>0783916633 uniquement le mercredi lors des permanences</dd>
+</dl>
+
+<h2>Prix de l’emplacement</h2>
+
+<dl>
+  <dt>Personne extérieure à l’association</dt><dd class="euro">14</dd>
+  <dt>Membre de l’association</dt><dd class="euro">12</dd>
+  <dt>Salarié de l’association</dt><dd class="euro">10</dd>
+</dl>
+
+<h2>Inscription</h2>
+<div class="text-center">
+  {% if request.user.is_authenticated %}
+  {% if request.user.caracolien.reservation %}
+  <a href="{% url 'videgrenier:reservation-detail' %}" class="btn btn-primary">Voir où en est mon inscription</a>
+  <a href="{% url 'videgrenier:reservation-delete' %}" class="btn btn-error">Annuler mon inscription</a>
+  {% else %}
+  <a href="{% url 'videgrenier:reservation-create' %}" class="btn btn-primary">S’inscrire</a>
+  {% endif %}
+  {% if request.user.is_staff %}
+  <a href="{% url 'videgrenier:reservation-list' %}" class="btn btn-info">Valider les inscriptions en attente</a>
+  {% endif %}
+  {% else %}
+  <div class="alert alert-info">Avant de pouvoir vous inscrire pour le vide grenier, vous devez créer un compte:</div>
+  <a href="{% url 'auth_login' %}?next={{ request.path }}" class="btn btn-primary">Se connecter</a>
+  {% endif %}
+</div>
+{% endblock %}

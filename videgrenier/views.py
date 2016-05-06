@@ -9,17 +9,6 @@ from caracole.mixins import StaffRequiredMixin
 from .models import Reservation
 
 
-class HomeView(RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        if self.request.user.is_staff:
-            return reverse('videgrenier:reservation-list')
-        if not self.request.user.is_authenticated():
-            return reverse('auth_login')
-        if Reservation.objects.filter(caracolien__user=self.request.user).exists():
-            return reverse('videgrenier:reservation-detail')
-        return reverse('videgrenier:reservation-create')
-
-
 class ReservationListView(StaffRequiredMixin, ListView):
     model = Reservation
 
