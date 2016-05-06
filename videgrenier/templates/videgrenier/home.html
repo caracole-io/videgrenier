@@ -33,12 +33,7 @@
 <h2>Inscription</h2>
 <div class="text-center">
   {% if request.user.is_authenticated %}
-  {% if request.user.caracolien.reservation %}
-  <a href="{% url 'videgrenier:reservation-detail' %}" class="btn btn-primary">Voir où en est mon inscription</a>
-  <a href="{% url 'videgrenier:reservation-delete' %}" class="btn btn-error">Annuler mon inscription</a>
-  {% else %}
-  <a href="{% url 'videgrenier:reservation-create' %}" class="btn btn-primary">S’inscrire</a>
-  {% endif %}
+  <a href="{% url 'videgrenier:reservation-create' %}" class="btn btn-primary">Accéder à l’interface de réservation</a>
   {% if request.user.is_staff %}
   <a href="{% url 'videgrenier:reservation-list' %}" class="btn btn-info">Valider les inscriptions en attente</a>
   {% endif %}

@@ -16,11 +16,16 @@ class ReservationListView(StaffRequiredMixin, ListView):
 class ReservationCreateView(LoginRequiredMixin, CreateView):
     model = Reservation
     fields = []
-    success_url = reverse_lazy('videgrenier:home')
+    success_url = reverse_lazy('videgrenier:reservation-detail')
 
     def form_valid(self, form):
         form.instance.caracolien = self.request.user.caracolien
         return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        if Reservation.objects.filter(caracolien=self.request.user.caracolien).exists():
+            return HttpResponseRedirect(reverse('videgrenier:reservation-detail'))
+        return super().get(request, *args, **kwargs)
 
 
 class ReservationUpdateView(StaffRequiredMixin, UpdateView):
@@ -40,7 +45,7 @@ class ReservationUserMixin(LoginRequiredMixin):
 
 
 class ReservationDeleteView(ReservationUserMixin, DeleteView):
-    pass
+    success_url = reverse_lazy('videgrenier:home')
 
 
 class ReservationDetailView(ReservationUserMixin, DetailView):

@@ -7,4 +7,10 @@
 
 <p>Votre réservation est {{ object.accepte|yesno:"acceptée,refusée,en cours de traitement" }}.</p>
 
+<p class="text-center">
+<a href="{% url 'videgrenier:reservation-delete' %}" class="btn btn-danger">Annuler mon inscription</a>
+<br>
+<a href="{% url 'videgrenier:home' %}">retour</a>
+</p>
+
 {% endblock %}

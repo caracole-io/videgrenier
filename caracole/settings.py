@@ -26,9 +26,6 @@ BASE_DIR = dirname(dirname(abspath(__file__)))
 
 CONF_DIR = Path("/etc/django/") / PROJECT
 
-if not CONF_DIR.is_dir():
-    CONF_DIR.mkdir(parents=True)
-
 SECRET_KEY = (CONF_DIR / "secret_key.txt").open().read().strip()
 
 DEBUG = not (CONF_DIR / "prod").is_file()
@@ -159,9 +156,6 @@ LOGGING = {
     },
 }
 
-if (Path(BASE_DIR) / PROJECT / 'context_processors.py').is_file():
-    TEMPLATES[0]['OPTIONS']['context_processors'].append('%s.context_processors.%s' % (PROJECT, PROJECT))
-
 # if not DEBUG:
     # INSTALLED_APPS.append('raven.contrib.django.raven_compat')
     # RAVEN_CONFIG = {"dsn": (CONF_DIR / "raven").open().read().strip()}
@@ -170,12 +164,11 @@ if 'bootstrap3' in INSTALLED_APPS:
     BOOTSTRAP3 = {
         "horizontal_label_class": "col-md-3",
         "horizontal_field_class": "col-md-6",
+        "jquery_url": ("/static/js/jquery.min.js" if DEBUG else
+                       "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"),
     }
     if DEBUG:
-        BOOTSTRAP3["jquery_url"] = "/static/js/jquery.min.js"
         BOOTSTRAP3["base_url"] = "/static/"
-    else:
-        BOOTSTRAP3["jquery_url"] = "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
 
 if 'registration' in INSTALLED_APPS:
     ACCOUNT_ACTIVATION_DAYS = 7

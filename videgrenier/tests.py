@@ -33,8 +33,10 @@ class VideGrenierTests(TestCase):
     # VIEWS
 
     def test_views_status(self):
-        self.client.login(username='a', password='a')
+        self.client.login(username='c', password='c')
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-create')).status_code, 200)
+        self.client.login(username='a', password='a')
+        self.assertEqual(self.client.get(reverse('videgrenier:reservation-create')).status_code, 302)
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-detail')).status_code, 200)
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-delete')).status_code, 200)
 
