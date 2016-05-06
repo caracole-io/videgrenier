@@ -8,7 +8,7 @@ server {
     listen 443 ssl;
     server_name www.caracole.totheweb.fr;
 
-    ssl_certificate     ssl/caracole.totheweb.fr.startssl.chained.crt;
+    ssl_certificate     ssl/caracole.totheweb.fr.startssl.crt;
     ssl_certificate_key ssl/caracole.totheweb.fr.key;
 
     return 301 https://caracole.totheweb.fr$request_uri;
@@ -18,7 +18,7 @@ server {
     listen 443 ssl;
     server_name caracole.totheweb.fr;
 
-    ssl_certificate     ssl/caracole.totheweb.fr.startssl.chained.crt;
+    ssl_certificate     ssl/caracole.totheweb.fr.startssl.crt;
     ssl_certificate_key ssl/caracole.totheweb.fr.key;
 
     access_log  /var/log/nginx/caracole.log;

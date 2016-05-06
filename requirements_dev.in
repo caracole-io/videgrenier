@@ -5,7 +5,6 @@ pip-tools
 python-coveralls
 selenium
 
-# Copy paste from requirements.in
 Django
 django-bootstrap3
 django-registration-redux
