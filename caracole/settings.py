@@ -157,8 +157,8 @@ LOGGING = {
 }
 
 # if not DEBUG:
-    # INSTALLED_APPS.append('raven.contrib.django.raven_compat')
-    # RAVEN_CONFIG = {"dsn": (CONF_DIR / "raven").open().read().strip()}
+#     INSTALLED_APPS.append('raven.contrib.django.raven_compat')
+#     RAVEN_CONFIG = {"dsn": (CONF_DIR / "raven").open().read().strip()}
 
 if 'bootstrap3' in INSTALLED_APPS:
     BOOTSTRAP3 = {
