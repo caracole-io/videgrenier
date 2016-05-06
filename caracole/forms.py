@@ -10,9 +10,7 @@ class CaracolienForm(ModelForm):
 
     def clean_phone_number(self):
         phone = self.cleaned_data['phone_number']
-        print(phone)
         phone = phone.replace(' ', '').replace('.', '')
         if phone.startswith('0'):
             phone = '+33%s' % phone[1:]
-        print(phone)
         return phone

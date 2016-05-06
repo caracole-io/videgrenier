@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from .models import Caracolien
@@ -30,3 +31,18 @@ class CaracolienTests(TestCase):
         self.assertTrue(a.adherent())
         self.assertFalse(b.adherent())
         self.assertFalse(c.adherent())
+
+    # VIEWS
+
+    def test_views_status(self):
+        self.assertEqual(self.client.get(reverse('profil')).status_code, 302)
+        self.client.login(username='a', password='a')
+        self.assertEqual(self.client.get(reverse('profil')).status_code, 200)
+        self.assertEqual(self.client.get(reverse('profil-caracolien')).status_code, 200)
+        self.assertEqual(self.client.get(reverse('profil-user')).status_code, 200)
+        self.assertEqual(self.client.get(reverse('profil-password')).status_code, 200)
+
+    def test_phone(self):
+        self.client.login(username='b', password='b')
+        self.client.post(reverse('profil-caracolien'), {'phone_number': '06 424.83 000', 'address': ''})
+        self.assertEqual(Caracolien.objects.get(user__username='b').phone_number, '+33642483000')

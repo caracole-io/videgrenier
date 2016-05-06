@@ -11,11 +11,9 @@ from .models import Reservation
 
 class HomeView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        print('a')
         if self.request.user.is_staff:
             return reverse('videgrenier:reservation-list')
         if not self.request.user.is_authenticated():
-            print(self.request.user)
             return reverse('auth_login')
         if Reservation.objects.filter(caracolien__user=self.request.user).exists():
             return reverse('videgrenier:reservation-detail')
@@ -38,6 +36,7 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
 
 class ReservationUpdateView(StaffRequiredMixin, UpdateView):
     model = Reservation
+    fields = []
 
     def get(self, request, accepte, *args, **kwargs):
         reservation = self.get_object()

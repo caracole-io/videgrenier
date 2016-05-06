@@ -1,6 +1,6 @@
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.views import password_change
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import DetailView, UpdateView
 
@@ -24,20 +24,14 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class PasswordUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    form_class = PasswordChangeForm
-    success_url = reverse_lazy('profil')
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-
 class CaracolienUpdateView(LoginRequiredMixin, UpdateView):
     model = Caracolien
     form_class = CaracolienForm
     success_url = reverse_lazy('profil')
-    # fields = ('phone_number', 'address')
 
     def get_object(self, queryset=None):
         return self.request.user.caracolien
+
+
+def profil_password(request):
+    return password_change(request, post_change_redirect='profil')

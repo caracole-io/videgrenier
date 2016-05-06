@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from .views import CaracolienUpdateView, PasswordUpdateView, UserDetailView, UserUpdateView
+from .views import CaracolienUpdateView, UserDetailView, UserUpdateView, profil_password
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^profil$', UserDetailView.as_view(), name='profil'),
     url(r'^profil/caracolien$', CaracolienUpdateView.as_view(), name='profil-caracolien'),
     url(r'^profil/utilisateur$', UserUpdateView.as_view(), name='profil-user'),
-    url(r'^profil/password$', PasswordUpdateView.as_view(), name='profil-password'),
+    url(r'^profil/password$', profil_password, name='profil-password'),
 ]
