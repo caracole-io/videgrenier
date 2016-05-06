@@ -1,0 +1,43 @@
+server {
+    listen 80;
+    server_name caracole.totheweb.fr www.caracole.totheweb.fr;
+    return 301 https://caracole.totheweb.fr$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name www.caracole.totheweb.fr;
+
+    ssl_certificate     ssl/caracole.totheweb.fr.startssl.chained.crt;
+    ssl_certificate_key ssl/caracole.totheweb.fr.key;
+
+    return 301 https://caracole.totheweb.fr$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name caracole.totheweb.fr;
+
+    ssl_certificate     ssl/caracole.totheweb.fr.startssl.chained.crt;
+    ssl_certificate_key ssl/caracole.totheweb.fr.key;
+
+    access_log  /var/log/nginx/caracole.log;
+    error_log  /var/log/nginx/caracole.err;
+
+    location /static/ {
+        alias /var/www/caracole/static_dest/;
+        expires 30d;
+    }
+
+    location /media/ {
+        alias /var/www/caracole/media/;
+        expires 30d;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:8006;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
