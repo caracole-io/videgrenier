@@ -10,7 +10,7 @@ class Caracolien(models.Model):
     phone_regex = RegexValidator(regex=r'^\+\d{9,15}$')
     phone_number = models.CharField('téléphone', max_length=16, validators=[phone_regex], blank=True)
     adhesion = models.DateField('Date d’adhésion', blank=True, null=True)
-    address = models.TextField(blank=True)
+    address = models.TextField('adresse complète', blank=True)
 
     def __str__(self):
         return str(self.user)

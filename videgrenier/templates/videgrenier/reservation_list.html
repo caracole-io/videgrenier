@@ -6,10 +6,24 @@
 <h1>Réservations</h1>
 
 <table class="table table-striped">
-  <tr><th>Caracolien</th><th class="right">Prix</th><th>Status</th><th>Action</th></tr>
+  <tr>
+    <th>Caracolien</th>
+    <th>Prénom</th><th>Nom</th>
+    <th>Naissance</th>
+    <th>Adresse</th>
+    <th>Pièce d’identité</th>
+    <th>N° d’immatriculation</th>
+    <th class="right">Prix</th><th>Status</th><th>Action</th>
+  </tr>
   {% for object in object_list %}
   <tr>
     <td>{{ object }}</td>
+    <td>{{ object.caracolien.user.first_name }}</td>
+    <td>{{ object.caracolien.user.last_name }}</td>
+    <td>Le {{ object.birthdate|date:"d/m/y" }} à {{ object.birthplace }}</td>
+    <td>{{ object.caracolien.address|linebreaks }}</td>
+    <td>n°{{ object.id_num }} delivrée le {{ object.id_date|date:"d/m/y" }} par {{ object.id_org }}</td>
+    <td>{{ object.plaque }}</td>
     <td class="euro">{{ object.prix }}</td>
     <td>{{ object.accepte|yesno:"✔,✘,?" }}</td>
     <td>

@@ -15,7 +15,7 @@ class ReservationListView(StaffRequiredMixin, ListView):
 
 class ReservationCreateView(LoginRequiredMixin, CreateView):
     model = Reservation
-    fields = []
+    fields = ['birthdate', 'birthplace', 'id_num', 'id_date', 'id_org', 'plaque']
 
     def form_valid(self, form):
         form.instance.caracolien = self.request.user.caracolien
