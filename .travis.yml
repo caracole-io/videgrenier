@@ -20,3 +20,7 @@ script:
   - flake8 .
 after_success:
   - coveralls
+addons:
+  sauce_connect:
+    username: "nim65s"
+    access_key: "dee2e650-a53b-470d-8919-a50d9bcca51c"

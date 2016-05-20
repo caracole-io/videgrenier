@@ -49,6 +49,7 @@ class VideGrenierTests(TestCase):
         self.client.login(username='a', password='a')
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-create')).status_code, 302)
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-detail')).status_code, 200)
+        self.assertEqual(self.client.get(reverse('videgrenier:reservation-update')).status_code, 200)
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-delete')).status_code, 200)
 
     def test_reservation_create_view(self):
@@ -61,8 +62,8 @@ class VideGrenierTests(TestCase):
         reservation = Reservation.objects.get(caracolien__user__username='a')
         self.assertIsNone(reservation.accepte)
         self.client.login(username='d', password='d')
-        self.client.get(reverse('videgrenier:reservation-update', kwargs={'pk': reservation.pk, 'accepte': '0'}))
+        self.client.get(reverse('videgrenier:reservation-moderate', kwargs={'pk': reservation.pk, 'accepte': '0'}))
         self.assertFalse(Reservation.objects.get(caracolien__user__username='a').accepte)
-        self.client.get(reverse('videgrenier:reservation-update', kwargs={'pk': reservation.pk, 'accepte': '1'}))
+        self.client.get(reverse('videgrenier:reservation-moderate', kwargs={'pk': reservation.pk, 'accepte': '1'}))
         reservation = Reservation.objects.get(caracolien__user__username='a')
         self.assertTrue(Reservation.objects.get(caracolien__user__username='a').accepte)

@@ -27,7 +27,7 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
         return super().get(request, *args, **kwargs)
 
 
-class ReservationUpdateView(StaffRequiredMixin, UpdateView):
+class ReservationModerateView(StaffRequiredMixin, UpdateView):
     model = Reservation
     fields = []
 
@@ -48,4 +48,11 @@ class ReservationDeleteView(ReservationUserMixin, DeleteView):
 
 
 class ReservationDetailView(ReservationUserMixin, DetailView):
-    pass
+    def get_context_data(self, **kwargs):
+        infos = [(self.object._meta.get_field(field).verbose_name,
+                  self.object.__dict__[field]) for field in ReservationCreateView.fields]
+        return super().get_context_data(infos=infos, **kwargs)
+
+
+class ReservationUpdateView(ReservationUserMixin, UpdateView):
+    fields = ReservationCreateView.fields

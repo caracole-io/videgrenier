@@ -5,9 +5,25 @@
 {% block content %}
 <h1>Votre Réservation</h1>
 
-<p>Votre réservation est {{ object.accepte|yesno:"acceptée,refusée,en cours de traitement" }}.</p>
+<table class="table table-condensed">
+  {% for key, value in infos %}
+  <tr><th>{{ key }}</th><td>{{ value }}</td></tr>
+  {% endfor %}
+</table>
+
+{% if not object.profil_complete %}
+<div class="alert alert-danger text-center" role="alert">
+  <p>Vous devez encore renseigner les informations de votre
+  <a href="{% url 'profil' %}" class="alert-link">profil</a>.</p>
+</div>
+{% else %}
+<div class="alert alert-{{ object.accepte|yesno:"success,danger,info" }} text-center" role="alert">
+  <p>Votre réservation est {{ object.accepte|yesno:"acceptée,refusée,en cours de traitement" }}.</p>
+</div>
+{% endif %}
 
 <p class="text-center">
+<a href="{% url 'videgrenier:reservation-update' %}" class="btn btn-primary">Modifier les infos de mon inscription</a>
 <a href="{% url 'videgrenier:reservation-delete' %}" class="btn btn-danger">Annuler mon inscription</a>
 <br>
 <a href="{% url 'videgrenier:home' %}">retour</a>

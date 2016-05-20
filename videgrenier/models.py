@@ -39,3 +39,7 @@ class Reservation(models.Model):
         if self.accepte:
             return 'acceptée'
         return 'refusée'
+
+    def profil_complete(self):
+        caracolien = self.caracolien
+        return all(bool(info) for info in (caracolien.user.first_name, caracolien.user.last_name, caracolien.address))
