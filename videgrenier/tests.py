@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from random import randint
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -7,16 +8,29 @@ from django.test import TestCase
 from .models import Reservation
 
 
+def infos(guy):
+    birthdate = date(1970, 1, 1) + timedelta(days=randint(1, 1E4))
+    age = (date.today() - birthdate).days
+    return {
+        'birthdate': birthdate,
+        'birthplace': 'birthplace of %s' % guy,
+        'id_num': 'id number of %s' % guy,
+        'id_date': date.today() - timedelta(days=randint(1, age)),
+        'id_org': 'id issuer of %s' % guy,
+        'plaque': 'plaque of %s' % guy,
+    }
+
+
 class VideGrenierTests(TestCase):
     def setUp(self):
         for guy in 'abcd':
             user = User.objects.create_user(guy, email='%s@example.org' % guy, password=guy)
             if guy == 'a':
-                Reservation.objects.create(caracolien=user.caracolien)
+                Reservation.objects.create(caracolien=user.caracolien, **infos(guy))
                 user.caracolien.adhesion = date.today() - timedelta(days=8)
                 user.caracolien.save()
             elif guy == 'b':
-                Reservation.objects.create(caracolien=user.caracolien)
+                Reservation.objects.create(caracolien=user.caracolien, **infos(guy))
             elif guy == 'd':
                 user.is_staff = True
                 user.save()
@@ -40,7 +54,7 @@ class VideGrenierTests(TestCase):
     def test_reservation_create_view(self):
         self.assertFalse(Reservation.objects.filter(caracolien__user__username='c').exists())
         self.client.login(username='c', password='c')
-        self.client.post(reverse('videgrenier:reservation-create'))
+        self.client.post(reverse('videgrenier:reservation-create'), infos('c'))
         self.assertTrue(Reservation.objects.filter(caracolien__user__username='c').exists())
 
     def test_reservation_update_view(self):
