@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load staticfiles %}
 
 {% block title %}Vide Grenier{% endblock %}
 
@@ -42,4 +42,7 @@
   <a href="{% url 'auth_login' %}?next={{ request.path }}" class="btn btn-primary">Se connecter</a>
   {% endif %}
 </div>
+
+<h2>Charte</h2>
+<embed src="{% static 'documents/CharteVideGrenier-2015.pdf' %}" width="100%" height="1000" type='application/pdf'>
 {% endblock %}
