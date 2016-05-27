@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -51,6 +52,14 @@ class CaracolienTests(TestCase):
         self.client.login(username='b', password='b')
         self.client.post(reverse('profil-caracolien'), {'phone_number': '06 424.83 000', 'address': ''})
         self.assertEqual(Caracolien.objects.get(user__username='b').phone_number, '+33642483000')
+
+    # BACKENDS
+
+    def test_auth_backend(self):
+        for username in ['a', 'a@example.org']:
+            self.assertEqual(self.client.post(reverse('auth_login'), {'username': username, 'password': 'a'}).url,
+                             settings.LOGIN_REDIRECT_URL)
+            self.client.get(reverse('auth_logout'))
 
 
 # TODO
