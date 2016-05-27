@@ -1,5 +1,8 @@
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.template.loader import get_template
 
 from caracole.models import Caracolien
 
@@ -23,12 +26,18 @@ class Reservation(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        email_content = 'Bonjour,\n\nVotre réservation au vide grenier est désormais %s.\n\n' % self.status()
-        if self.accepte:
-            email_content += 'Il ne vous reste plus qu’à envoyer un chèque de 14€ (12€ pour les adhérents).\n\n'
-        email_content += 'L’équipe Caracole.'
-        email_content += '\n\n--\n  Ce mail est automatique. Pour nous contacter, association.caracole@gmail.com'
-        self.caracolien.user.email_user('[Caracole][Vide Grenier] Votre réservation', email_content)
+        if self.accepte is None:
+            ctx = {'object': self}
+            text, html = (get_template('videgrenier/mail.%s' % alt).render(ctx) for alt in ['txt', 'html'])
+            msg = EmailMultiAlternatives('[Vide Grenier] Votre réservation', text, settings.DEFAULT_FROM_EMAIL,
+                                         [self.caracolien.user.email], reply_to=(settings.REPLY_TO,))
+            msg.attach_alternative(html, 'text/html')
+            msg.send()
+        else:
+            email_content = 'Bonjour,\n\nVotre réservation au vide grenier est désormais %s.\n\n' % self.status()
+            email_content += 'L’équipe Caracole.'
+            email_content += '\n\n--\n  Ce mail est automatique. Pour nous contacter, utilisez %s' % settings.REPLY_TO
+            self.caracolien.user.email_user('[Caracole][Vide Grenier] Votre réservation', email_content)
 
     def get_absolute_url(self):
         return reverse('videgrenier:reservation-detail')

@@ -1,8 +1,8 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
-from .views import (ReservationCreateView, ReservationDeleteView, ReservationModerateView,
-                    ReservationDetailView, ReservationListView, ReservationUpdateView)
+from .views import (ReservationCreateView, ReservationDeleteView, ReservationDetailView,
+                    ReservationListView, ReservationModerateView, ReservationUpdateView)
 
 app_name = 'videgrenier'
 urlpatterns = [

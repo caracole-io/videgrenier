@@ -1,0 +1,50 @@
+<html>
+  <head></head>
+  <body>
+    <p> Votre demande d'inscription au vide grenier est maintenant active. </p>
+
+    <p>Elle pourra être acceptée dès lors que vous aurez rempli les conditions suivantes:
+    <ol>
+      <li>Envoi du paiement du solde de votre demande : 14 € (12€ pour les adhérents) par chèque à l'ordre de l'association Caracole</li>
+      <li>Envoi d'une photocopie recto-verso de votre pièce d'identité</li>
+      <li>Envoi de l'impression du mail récapitulatif daté et signé</li>
+      <li>Envoi de l'impression de la <a
+          href="https://caracole.totheweb.fr/static/documents/CharteVideGrenier-2015.pdf">charte</a> signée</li>
+    </ol>
+    </p>
+
+    <p> Merci de renvoyer cet email imprimé et signé à l'adresse suivante:
+    <blockquote>
+      Inscription vide grenier
+      Association Caracole, Maison de l'économie Solidaire
+      73 Chemin de Mange-Pommes - 31520 Ramonville-Saint-Agne - France
+    </blockquote>
+    </p>
+
+    <h2> recapitulatif de votre demande de stand(s) pour le vide grenier du 28 juin 2015 de Caracole </h2>
+    <dl>
+      <dt>Nom</dt><dd>{{ reservation.caracolien.user.last_name }</dd>
+      <dt>Prénom</dt><dd>{{ reservation.caracolien.user.first_name }</dd>
+      <dt>Adresse</dt><dd>{{ reservation.caracolien.address }</dd>
+      <dt>Tél</dt><dd>{{ reservation.caracolien.telephone }</dd>
+      <dt>Nombre d'emplacements demandé</dt><dd>{{ reservation.emplacements }</dd>
+      <dt>Nature des objets exposés</dt><dd>{{ reservation.nature }}</dd>
+    </dl>
+
+    <h2>Informations administratives</h2>
+    <dl>
+      <dt>N° de pièce d'identité</dt><dd>{{ reservation.id_num }}</dd>
+      <dt>Date de délivrance de cette pièce</dt><dd>{{ reservation.id_date }}</dd>
+      <dt>Autorité de délivrance de cette pièce</dt><dd>{{ reservation.id_org }}</dd>
+    </dl>
+
+    <p> Je soussigné {{ reservation.caracolien.user.first_name }} {{ reservation.caracolien.user.last_name }} prends
+    l'entière responsabilité des objets que je mettrai en vente lors de cette manifestation et m'engage à remporter
+    tous mes invendus en fin de journée. </p>
+
+    <p> En signant ce document : j'atteste sur l'honneur l'exactitude des informations figurants sur celui-ci, de la même manière j'atteste sur l'honneur de ma non-participation à deux autres manifestations de même nature au cours de cette année.</p>
+    <p> Fait à ......................  </p>
+    <p> Le ..........................  </p>
+    <p> Signature : </p>
+  </body>
+</html>

@@ -64,6 +64,11 @@ class VideGrenierTests(TestCase):
         self.assertIsNone(reservation.accepte)
         self.client.login(username='d', password='d')  # d est staff
 
+        # la réservation vient d’être créée, gros mail
+        email_user = mail.outbox[-2]
+        self.assertEqual(email_user.to, ['a@example.org'])
+        self.assertIn('est maintenant active', email_user.body)
+
         # d refuse la réservation: la réservation est refusée, a & c reçoivent des mails correspondants
         self.client.get(reverse('videgrenier:reservation-moderate', kwargs={'pk': reservation.pk, 'accepte': '0'}))
         self.assertFalse(Reservation.objects.get(caracolien__user__username='a').accepte)
