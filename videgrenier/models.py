@@ -28,7 +28,7 @@ class Reservation(models.Model):
         super().save(*args, **kwargs)
         if self.accepte is None:
             if self.profil_complete():
-                ctx = {'object': self}
+                ctx = {'reservation': self}
                 text, html = (get_template('videgrenier/mail.%s' % alt).render(ctx) for alt in ['txt', 'html'])
                 msg = EmailMultiAlternatives('[Vide Grenier] Votre réservation', text, settings.DEFAULT_FROM_EMAIL,
                                              [self.caracolien.user.email], reply_to=(settings.REPLY_TO,))
