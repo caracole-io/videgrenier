@@ -1,5 +1,3 @@
-from django.conf import settings
-from django.core.mail import mail_managers
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -21,11 +19,12 @@ class Reservation(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if not settings.DEBUG:
-            self.caracolien.user.email_user('[Caracole][Vide Grenier] Votre réservation', 'Bonjour,\n\n'
-                                            'Votre réservation au vide grenier est désormais %s.' % self.status())
-            mail_managers('[Vide Grenier] Réservation', 'Bonjour,\n\n'
-                          'La réservation de %s est désormais %s.' % (self, self.status()))
+        email_content = 'Bonjour,\n\nVotre réservation au vide grenier est désormais %s.\n\n' % self.status()
+        if self.accepte:
+            email_content += 'Il ne vous reste plus qu’à envoyer un chèque de 14€ (12€ pour les adhérents).\n\n'
+        email_content += 'L’équipe Caracole.'
+        email_content += '\n\n--\n  Ce mail est automatique. Pour nous contacter, association.caracole@gmail.com'
+        self.caracolien.user.email_user('[Caracole][Vide Grenier] Votre réservation', email_content)
 
     def get_absolute_url(self):
         return reverse('videgrenier:reservation-detail')

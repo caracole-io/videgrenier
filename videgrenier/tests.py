@@ -67,17 +67,13 @@ class VideGrenierTests(TestCase):
         # d refuse la réservation: la réservation est refusée, a & c reçoivent des mails correspondants
         self.client.get(reverse('videgrenier:reservation-moderate', kwargs={'pk': reservation.pk, 'accepte': '0'}))
         self.assertFalse(Reservation.objects.get(caracolien__user__username='a').accepte)
-        email_manager = mail.outbox[-1]
-        email_user = mail.outbox[-2]
+        email_user = mail.outbox[-1]
         self.assertEqual(email_user.to, ['a@example.org'])
         self.assertIn('grenier est désormais refusée', email_user.body)
-        self.assertIn('de a est désormais refusée', email_manager.body)
 
         # d accept la réservation: la réservation est acceptée, a & c reçoivent des mails correspondants
         self.client.get(reverse('videgrenier:reservation-moderate', kwargs={'pk': reservation.pk, 'accepte': '1'}))
         self.assertTrue(Reservation.objects.get(caracolien__user__username='a').accepte)
-        email_manager = mail.outbox[-1]
-        email_user = mail.outbox[-2]
+        email_user = mail.outbox[-1]
         self.assertEqual(email_user.to, ['a@example.org'])
         self.assertIn('grenier est désormais acceptée', email_user.body)
-        self.assertIn('de a est désormais acceptée', email_manager.body)
