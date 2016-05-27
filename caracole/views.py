@@ -1,37 +1,32 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import password_change
-from django.core.urlresolvers import reverse_lazy
-from django.views.generic import DetailView, UpdateView
+from django.shortcuts import render
 
-from .forms import CaracolienForm
-from .models import Caracolien
+from .forms import CaracolienForm, UserForm
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
-    model = User
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-
-class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    fields = ('username', 'email', 'first_name', 'last_name')
-    success_url = reverse_lazy('profil')
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-
-class CaracolienUpdateView(LoginRequiredMixin, UpdateView):
-    model = Caracolien
-    form_class = CaracolienForm
-    success_url = reverse_lazy('profil')
-
-    def get_object(self, queryset=None):
-        return self.request.user.caracolien
-
-
+@login_required
 def profil_password(request):
     return password_change(request, post_change_redirect='profil')
+
+
+@login_required
+def profil(request):
+    ok = True
+    if request.method == 'POST':
+        forms = [UserForm(request.POST, instance=request.user),
+                 CaracolienForm(request.POST, instance=request.user.caracolien)]
+        for form in forms:
+            if form.is_valid():
+                form.save()
+            else:
+                ok = False
+    if ok:
+        if request.method == 'POST':
+            messages.success(request, 'Ces informations ont bien été enregistrées')
+        forms = [UserForm(instance=request.user),
+                 CaracolienForm(instance=request.user.caracolien)]
+    else:
+        messages.error(request, 'Certains champs présentent des erreurs')
+    return render(request, 'profil.html', {'forms': forms})

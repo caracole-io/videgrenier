@@ -27,12 +27,13 @@ class Reservation(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.accepte is None:
-            ctx = {'object': self}
-            text, html = (get_template('videgrenier/mail.%s' % alt).render(ctx) for alt in ['txt', 'html'])
-            msg = EmailMultiAlternatives('[Vide Grenier] Votre réservation', text, settings.DEFAULT_FROM_EMAIL,
-                                         [self.caracolien.user.email], reply_to=(settings.REPLY_TO,))
-            msg.attach_alternative(html, 'text/html')
-            msg.send()
+            if self.profil_complete():
+                ctx = {'object': self}
+                text, html = (get_template('videgrenier/mail.%s' % alt).render(ctx) for alt in ['txt', 'html'])
+                msg = EmailMultiAlternatives('[Vide Grenier] Votre réservation', text, settings.DEFAULT_FROM_EMAIL,
+                                             [self.caracolien.user.email], reply_to=(settings.REPLY_TO,))
+                msg.attach_alternative(html, 'text/html')
+                msg.send()
         else:
             email_content = 'Bonjour,\n\nVotre réservation au vide grenier est désormais %s.\n\n' % self.status()
             email_content += 'L’équipe Caracole.'
