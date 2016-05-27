@@ -7,10 +7,12 @@ from caracole.models import Caracolien
 class Reservation(models.Model):
     caracolien = models.OneToOneField(Caracolien)
     accepte = models.NullBooleanField('accepté', default=None)
-    birthdate = models.DateField('date de naissance')
+    birthdate = models.DateField('date de naissance',
+                                 help_text='les dates doivent être au format JJ/MM/AAAA')
     birthplace = models.CharField('lieu de naissance', max_length=250)
     id_num = models.CharField('numéro de la pièce d’identité', max_length=100)
-    id_date = models.DateField('date de délivrance de la pièce d’identité')
+    id_date = models.DateField('date de délivrance de la pièce d’identité',
+                               help_text='les dates doivent être au format JJ/MM/AAAA')
     id_org = models.CharField('organisme délivrant la pièce d’identité', max_length=100)
     plaque = models.CharField('numéro d’immatriculation du véhicule', max_length=20)
 
