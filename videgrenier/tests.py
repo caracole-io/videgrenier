@@ -27,9 +27,13 @@ class VideGrenierTests(TestCase):
         for guy in 'abcd':
             user = User.objects.create_user(guy, email='%s@example.org' % guy, password=guy)
             if guy == 'a':
-                Reservation.objects.create(caracolien=user.caracolien, **infos(guy))
+                user.first_name = 'a'
+                user.last_name = 'a'
+                user.save()
+                user.caracolien.address = 'nowhere'
                 user.caracolien.adhesion = date.today() - timedelta(days=8)
                 user.caracolien.save()
+                Reservation.objects.create(caracolien=user.caracolien, **infos(guy))
             elif guy == 'b':
                 Reservation.objects.create(caracolien=user.caracolien, **infos(guy))
             elif guy == 'd':
@@ -46,18 +50,10 @@ class VideGrenierTests(TestCase):
 
     def test_views_status(self):
         self.client.login(username='c', password='c')
-        self.assertEqual(self.client.get(reverse('videgrenier:reservation-create')).status_code, 200)
         self.client.login(username='a', password='a')
-        self.assertEqual(self.client.get(reverse('videgrenier:reservation-create')).status_code, 302)
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-detail')).status_code, 200)
-        self.assertEqual(self.client.get(reverse('videgrenier:reservation-update')).status_code, 200)
+        self.assertEqual(self.client.get(reverse('videgrenier:reservation')).status_code, 200)
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-delete')).status_code, 200)
-
-    def test_reservation_create_view(self):
-        self.assertFalse(Reservation.objects.filter(caracolien__user__username='c').exists())
-        self.client.login(username='c', password='c')
-        self.client.post(reverse('videgrenier:reservation-create'), infos('c'))
-        self.assertTrue(Reservation.objects.filter(caracolien__user__username='c').exists())
 
     def test_reservation_update_view(self):
         reservation = Reservation.objects.get(caracolien__user__username='a')
@@ -65,7 +61,7 @@ class VideGrenierTests(TestCase):
         self.client.login(username='d', password='d')  # d est staff
 
         # la réservation vient d’être créée, gros mail
-        email_user = mail.outbox[-2]
+        email_user = mail.outbox[-1]
         self.assertEqual(email_user.to, ['a@example.org'])
         self.assertIn('est maintenant active', email_user.body)
 

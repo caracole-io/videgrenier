@@ -44,13 +44,11 @@ class CaracolienTests(TestCase):
         self.assertEqual(self.client.get(reverse('profil')).status_code, 302)
         self.client.login(username='a', password='a')
         self.assertEqual(self.client.get(reverse('profil')).status_code, 200)
-        self.assertEqual(self.client.get(reverse('profil-caracolien')).status_code, 200)
-        self.assertEqual(self.client.get(reverse('profil-user')).status_code, 200)
         self.assertEqual(self.client.get(reverse('profil-password')).status_code, 200)
 
     def test_phone(self):
         self.client.login(username='b', password='b')
-        self.client.post(reverse('profil-caracolien'), {'phone_number': '06 424.83 000', 'address': ''})
+        self.client.post(reverse('profil'), {'phone_number': '06 424.83 000', 'address': ''})
         self.assertEqual(Caracolien.objects.get(user__username='b').phone_number, '+33642483000')
 
     # BACKENDS
@@ -60,6 +58,7 @@ class CaracolienTests(TestCase):
             self.assertEqual(self.client.post(reverse('auth_login'), {'username': username, 'password': 'a'}).url,
                              settings.LOGIN_REDIRECT_URL)
             self.client.get(reverse('auth_logout'))
+        self.assertEqual(self.client.post(reverse('auth_login'), {'username': 'ne', 'password': 'a'}).status_code, 200)
 
 
 # TODO
