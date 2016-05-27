@@ -15,6 +15,8 @@ class Reservation(models.Model):
                                help_text='les dates doivent être au format JJ/MM/AAAA')
     id_org = models.CharField('organisme délivrant la pièce d’identité', max_length=100)
     plaque = models.CharField('numéro d’immatriculation du véhicule', max_length=20)
+    emplacements = models.IntegerField('nombre d’emplacements demandés', default=1)
+    nature = models.CharField('nature des objets exposés', max_length=250, default='')
 
     def __str__(self):
         return str(self.caracolien)
