@@ -178,4 +178,4 @@ if 'registration' in INSTALLED_APPS:
     REGISTRATION_AUTO_LOGIN = True
 
 LOGIN_REDIRECT_URL = reverse_lazy('profil')
-AUTHENTICATION_BACKENDS = ['caracole.backends.EmailOrUsernameModelBackend']
+AUTHENTICATION_BACKENDS = ['yeouia.backends.YummyEmailOrUsernameInsensitiveAuth']

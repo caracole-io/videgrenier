@@ -5,6 +5,7 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 
+-e git://github.com/Nim65s/django-YummyEmailOrUsernameInsensitiveAuth.git#egg=django-yeouia
 django-bootstrap3==7.0.1
 django-registration-redux==1.4
 Django==1.9.6

@@ -4,3 +4,4 @@ django-registration-redux
 python-memcached
 gunicorn
 psycopg2
+-e git://github.com/Nim65s/django-YummyEmailOrUsernameInsensitiveAuth.git#egg=django-yeouia
