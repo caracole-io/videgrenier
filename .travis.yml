@@ -5,7 +5,7 @@ python:
 services:
   - postgresql
 install:
-  - pip install -r requirements_dev.txt
+  - pip install python-coveralls flake8 -r requirements.txt
   - sudo mkdir -p /etc/django/caracole
   - sudo chmod -R 777 /etc/django
   - echo pipo > /etc/django/caracole/secret_key.txt
