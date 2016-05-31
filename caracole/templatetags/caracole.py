@@ -3,6 +3,7 @@ from django.utils.safestring import mark_safe
 
 register = template.Library()
 
+
 @register.filter
 def email(email, request):
     if request.user.is_authenticated():

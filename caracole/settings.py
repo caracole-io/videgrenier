@@ -177,5 +177,5 @@ if 'registration' in INSTALLED_APPS:
     ACCOUNT_ACTIVATION_DAYS = 7
     REGISTRATION_AUTO_LOGIN = True
 
-LOGIN_REDIRECT_URL = reverse_lazy('profil')
+LOGIN_REDIRECT_URL = reverse_lazy('videgrenier:reservation')
 AUTHENTICATION_BACKENDS = ['yeouia.backends.YummyEmailOrUsernameInsensitiveAuth']
