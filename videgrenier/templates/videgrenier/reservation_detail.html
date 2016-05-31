@@ -11,7 +11,7 @@
 
 {% if not object.profil_complete %}
 <div class="alert alert-danger text-center" role="alert">
-  <p>Vous devez encore renseigner les informations de votre profil.</p>
+  <p>Vous devez encore renseigner certaines de ces informations.</p>
 </div>
 {% else %}
 <div class="alert alert-{{ object.accepte|yesno:"success,danger,info" }} text-center" role="alert">

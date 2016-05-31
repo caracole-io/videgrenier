@@ -1,4 +1,4 @@
-{% extends "base.html" %}{% load staticfiles %}
+{% extends "base_wo_messages.html" %}{% load staticfiles %}
 
 {% block title %}Vide Grenier{% endblock %}
 
@@ -19,6 +19,12 @@
     </ul>
   </div>
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    {% for message in messages %}
+    <div class="alert alert-dismissable{% if message.tags %} alert-{% if message.tags == "error" %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      {{ message }}
+    </div>
+    {% endfor %}
     {% block videgrenier %}{% endblock %}
   </div>
 </div>
