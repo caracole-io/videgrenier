@@ -78,4 +78,4 @@ def reservation(request):
         forms = [UserForm(instance=request.user),
                  CaracolienForm(instance=request.user.caracolien),
                  ReservationForm(instance=reserv)]
-    return render(request, 'forms.html', {'forms': forms})
+    return render(request, 'videgrenier/reservation_form.html', {'forms': forms})
