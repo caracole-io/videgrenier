@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.db.models import Sum
+from django.db.models.functions import Coalesce
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DeleteView, DetailView, ListView, UpdateView
@@ -13,8 +15,15 @@ from .forms import ReservationForm
 from .models import Reservation
 
 
+def query_sum(queryset, field):
+    return queryset.aggregate(s=Coalesce(Sum(field), 0))['s']
+
+
 class ReservationListView(StaffRequiredMixin, ListView):
     model = Reservation
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(total=query_sum(self.model.objects.all(), 'emplacements'), **kwargs)
 
 
 class ReservationModerateView(StaffRequiredMixin, UpdateView):

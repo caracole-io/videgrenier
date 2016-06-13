@@ -15,6 +15,7 @@
     <th>Status</th>
     <th>Action</th>
   </tr>
+  <tr><th colspan="5">Nombre total d’emplacements</th><td>{{ total }}</td></tr>
   {% for object in object_list %}
   <tr>
     <td><a href="mailto:{{ object.caracolien.user.email }}">
@@ -35,7 +36,6 @@
       <a class="btn btn-danger" href="{% url 'videgrenier:reservation-moderate' pk=object.pk accepte=0 %}">Refuser</a>
       {% endif %}
     </td>
-
   </tr>
   {% endfor %}
 </table>
