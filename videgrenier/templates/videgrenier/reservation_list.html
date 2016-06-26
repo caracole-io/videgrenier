@@ -3,6 +3,10 @@
 {% block videgrenier %}
 <h1>Réservations</h1>
 
+<p class="text-center">
+<a href="{% url 'videgrenier:csv' %}" class="btn btn-primary">Exporter vers un tableur</a> - 
+<a href="mailto:association.caracole@gmail.com?bcc={% for object in object_list %}{{ object.caracolien.user.email }},{% endfor %}" class="btn btn-primary">Envoyer un mail</a>
+</p>
 <table class="table table-striped">
   <tr>
     <th>Personne</th>

@@ -1,10 +1,13 @@
+import csv
+
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DeleteView, DetailView, ListView, UpdateView
 
@@ -67,11 +70,11 @@ def reservation(request):
     try:
         reserv = request.user.caracolien.reservation
     except:
-        reserv = None
+        return redirect('videgrenier:fini')
+    forms = [UserForm(request.POST or None, instance=request.user),
+             CaracolienForm(request.POST or None, instance=request.user.caracolien),
+             ReservationForm(request.POST or None, instance=reserv)]
     if request.method == 'POST':
-        forms = [UserForm(request.POST, instance=request.user),
-                 CaracolienForm(request.POST, instance=request.user.caracolien),
-                 ReservationForm(request.POST, instance=reserv)]
         for form in forms:
             if form.is_valid():
                 form.instance.caracolien = request.user.caracolien
@@ -83,8 +86,25 @@ def reservation(request):
             return redirect('videgrenier:reservation-detail')
         else:
             messages.error(request, 'Certains champs présentent des erreurs')
-    else:
-        forms = [UserForm(instance=request.user),
-                 CaracolienForm(instance=request.user.caracolien),
-                 ReservationForm(instance=reserv)]
     return render(request, 'videgrenier/reservation_form.html', {'forms': forms})
+
+
+@staff_member_required
+def csview(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="videgrenier.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Personne', 'email', 'Naissance', 'Adresse', 'Pièce d’identité', 'Immatriculation', 'Emplacements',
+                     'Nature', 'Accepté'])
+    for reservation in Reservation.objects.all():
+        writer.writerow(['%s %s' % (reservation.caracolien.user.first_name, reservation.caracolien.user.last_name),
+                         reservation.caracolien.user.email,
+                         '%s à %s' % (reservation.birthdate, reservation.birthplace),
+                         reservation.caracolien.address,
+                         'n°%s delivrée le %s par %s' % (reservation.id_num, reservation.id_date, reservation.id_org),
+                         reservation.plaque,
+                         reservation.emplacements,
+                         reservation.nature,
+                         'Oui' if reservation.accepte else 'Non'])
+    return response

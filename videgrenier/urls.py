@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
-from .views import (ReservationDeleteView, ReservationDetailView,
+from .views import (csview, ReservationDeleteView, ReservationDetailView,
                     ReservationListView, ReservationModerateView, reservation)
 
 app_name = 'videgrenier'
@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^reservation/annuler$', ReservationDeleteView.as_view(), name='reservation-delete'),
     url(r'^reservation/(?P<pk>\d+)/(?P<accepte>\d)$', ReservationModerateView.as_view(), name='reservation-moderate'),
     url(r'^admin$', ReservationListView.as_view(), name='reservation-list'),
+    url(r'^csv$', csview, name='csv'),
+    url(r'^fini$', TemplateView.as_view(template_name='videgrenier/fini.html'), name='fini'),
 ]
