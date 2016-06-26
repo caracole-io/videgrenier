@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DeleteView, DetailView, ListView, UpdateView
 
@@ -95,8 +95,8 @@ def csview(request):
     response['Content-Disposition'] = 'attachment; filename="videgrenier.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['Personne', 'email', 'Naissance', 'Adresse', 'Pièce d’identité', 'Immatriculation', 'Emplacements',
-                     'Nature', 'Accepté'])
+    writer.writerow(['Personne', 'email', 'Naissance', 'Adresse', 'Pièce d’identité', 'Immatriculation',
+                     'Emplacements', 'Nature', 'Accepté'])
     for reservation in Reservation.objects.all():
         writer.writerow(['%s %s' % (reservation.caracolien.user.first_name, reservation.caracolien.user.last_name),
                          reservation.caracolien.user.email,
