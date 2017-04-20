@@ -19,8 +19,8 @@ PROJECT = "caracole"
 PROJECT_VERBOSE = "Caracole"
 MAIL_USER = "majo"
 SELF_MAIL = False
-ALLOWED_HOSTS = ["caracole.totheweb.fr"]
-ALLOWED_HOSTS.append("www.%s" % ALLOWED_HOSTS[0])
+HOSTS = "caracole.totheweb.fr"
+ALLOWED_HOSTS = [HOSTS, f"www.{HOSTS}"]
 
 BASE_DIR = dirname(dirname(abspath(__file__)))
 
@@ -29,6 +29,9 @@ CONF_DIR = Path("/etc/django/") / PROJECT
 SECRET_KEY = (CONF_DIR / "secret_key.txt").open().read().strip()
 
 DEBUG = not (CONF_DIR / "prod").is_file()
+if DEBUG:
+    ALLOWED_HOSTS.append("127.0.0.1")
+    ALLOWED_HOSTS.append("localhost")
 
 EMAIL_SUBJECT_PREFIX = ("[%s Dev] " if DEBUG else "[%s] ") % PROJECT_VERBOSE
 
@@ -43,7 +46,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.%s' % ('locmem.EmailBackend' if DEBUG
 REPLY_TO = 'association.caracole@gmail.com'
 
 
-ADMINS = (("Guilhem Saurel", "guilhem+admin-%s@saurel.me" % PROJECT),)
+ADMINS = (("Guilhem Saurel", f"guilhem+admin-{PROJECT}@saurel.me"),)
 MANAGERS = ADMINS
 
 INSTALLED_APPS = [
@@ -56,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'bootstrap3',
     'registration',
     'videgrenier',
@@ -72,7 +76,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = '%s.urls' % PROJECT
+ROOT_URLCONF = f'{PROJECT}.urls'
 
 TEMPLATES = [
     {
@@ -95,7 +99,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = '%s.wsgi.application' % PROJECT
+WSGI_APPLICATION = f'{PROJECT}.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -133,7 +137,7 @@ SITE_ID = 1
 MEDIA_ROOT = join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
-STATIC_ROOT = join(BASE_DIR, 'static_dest') if DEBUG else '/var/www/%s/static_dest' % PROJECT
+STATIC_ROOT = join(BASE_DIR, 'static_dest') if DEBUG else f'/var/www/{PROJECT}/static_dest'
 
 CACHES = {
     "default": {
