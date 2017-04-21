@@ -24,4 +24,5 @@ def create_caracolien(sender, instance, created, **kwargs):
     if created:
         Caracolien.objects.create(user=instance)
 
+
 models.signals.post_save.connect(create_caracolien, sender=User, weak=False, dispatch_uid='create_caracolien')
