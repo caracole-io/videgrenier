@@ -13,7 +13,7 @@ Merci de renvoyer cet email imprimé et signé à l'adresse suivante:
 > 73 Chemin de Mange-Pommes - 31520 Ramonville-Saint-Agne - France
 
 -------------------------------------------------------------------------------------------
-recapitulatif de votre demande de stand(s) pour le vide grenier du 26 juin 2016 de Caracole
+recapitulatif de votre demande de stand(s) pour le vide grenier du 25 juin 2017 de Caracole
 -------------------------------------------------------------------------------------------
 Nom : {{ reservation.caracolien.user.last_name }}
 Prénom : {{ reservation.caracolien.user.first_name }}
