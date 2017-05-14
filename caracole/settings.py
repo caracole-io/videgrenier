@@ -176,3 +176,7 @@ if 'registration' in INSTALLED_APPS:
 
 LOGIN_REDIRECT_URL = reverse_lazy('videgrenier:reservation')
 AUTHENTICATION_BACKENDS = ['yeouia.backends.YummyEmailOrUsernameInsensitiveAuth']
+
+MIGRATION_MODULES = {
+    'sites': f'{PROJECT}.fixtures.sites_migrations',
+}

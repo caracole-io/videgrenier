@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 
 from django.contrib.auth.models import User
+from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -49,6 +50,20 @@ class CaracolienTests(TestCase):
         self.client.login(username='b', password='b')
         self.client.post(reverse('profil'), {'phone_number': '06 424.83 000', 'address': ''})
         self.assertEqual(Caracolien.objects.get(user__username='b').phone_number, '+33642483000')
+
+
+class RegistrationTests(TestCase):
+    def test_registration(self):
+        self.assertEqual(len(mail.outbox), 0)
+        ret = self.client.post(reverse('registration_register'), {
+            'username': 'pipo', 'email': 'pipo@bot.com', 'password1': 'Aik4aaPh', 'password2': 'Aik4aaPh'})
+        self.assertEqual(ret.status_code, 302)
+        ret = self.client.get(ret.url)
+        self.assertIn("Veuillez consulter votre boîte mail pour terminer le processus d'enregistrement",
+                      ret.content.decode())
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, 'Activation du compte sur vide grenier caracole')
+        self.assertIn('caracole.totheweb.fr/accounts/activate/', mail.outbox[0].body)
 
 
 # TODO
