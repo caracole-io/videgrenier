@@ -7,7 +7,7 @@ from .views import profil, profil_password
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
-    url(r'^$', RedirectView.as_view(pattern_name='videgrenier:home'), name='home'),
+    url(r'^$', RedirectView.as_view(url='http://caracole.le-pic.org'), name='old'),
     url(r'^vide-grenier/', include('videgrenier.urls')),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^profil$', profil, name='profil'),
