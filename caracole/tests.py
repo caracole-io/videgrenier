@@ -7,7 +7,6 @@ from django.test import TestCase
 
 from .models import Caracolien
 
-
 # import os
 
 # from selenium import webdriver
@@ -63,7 +62,7 @@ class RegistrationTests(TestCase):
                       ret.content.decode())
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Activation du compte sur vide grenier caracole')
-        self.assertIn('caracole.totheweb.fr/accounts/activate/', mail.outbox[0].body)
+        self.assertIn('caracole.io/accounts/activate/', mail.outbox[0].body)
 
 
 # TODO

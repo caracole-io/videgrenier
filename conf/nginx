@@ -1,25 +1,25 @@
 server {
     listen 80;
-    server_name caracole.totheweb.fr www.caracole.totheweb.fr;
-    return 301 https://caracole.totheweb.fr$request_uri;
+    server_name caracole.io www.caracole.io;
+    return 301 https://caracole.io$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name www.caracole.totheweb.fr;
+    server_name www.caracole.io;
 
-    ssl_certificate     /etc/letsencrypt/live/caracole.totheweb.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/caracole.totheweb.fr/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/caracole.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/caracole.io/privkey.pem;
 
-    return 301 https://caracole.totheweb.fr$request_uri;
+    return 301 https://caracole.io$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name caracole.totheweb.fr;
+    server_name caracole.io;
 
-    ssl_certificate     /etc/letsencrypt/live/caracole.totheweb.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/caracole.totheweb.fr/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/caracole.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/caracole.io/privkey.pem;
 
     access_log  /var/log/nginx/caracole.log;
     error_log  /var/log/nginx/caracole.err;

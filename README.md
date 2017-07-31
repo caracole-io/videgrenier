@@ -8,4 +8,4 @@ Vide Grenier
 ------------
 
 Pour l’instant, ce site ne sert que pour le vide grenier, disponible à l’adresse
-https://caracole.totheweb.fr/vide-grenier/
+https://caracole.io/vide-grenier/

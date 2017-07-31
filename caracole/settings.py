@@ -18,9 +18,8 @@ from django.core.urlresolvers import reverse_lazy
 PROJECT = "caracole"
 PROJECT_VERBOSE = "Caracole"
 MAIL_USER = "majo"
-SELF_MAIL = False
-HOSTS = "caracole.totheweb.fr"
-ALLOWED_HOSTS = [HOSTS, f"www.{HOSTS}"]
+HOST = "caracole.io"
+ALLOWED_HOSTS = [HOST, f"www.{HOST}"]
 
 BASE_DIR = dirname(dirname(abspath(__file__)))
 
@@ -36,14 +35,14 @@ if DEBUG:
 EMAIL_SUBJECT_PREFIX = ("[%s Dev] " if DEBUG else "[%s] ") % PROJECT_VERBOSE
 
 EMAIL_USE_SSL = True
-EMAIL_HOST = "mail.gandi.net" if SELF_MAIL else "SSL0.OVH.NET"
+EMAIL_HOST = "mail.gandi.net"
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "%s@%s" % (MAIL_USER, ALLOWED_HOSTS[0] if SELF_MAIL else "totheweb.fr")
-SERVER_EMAIL = "%s+%s@%s" % (MAIL_USER, PROJECT, ALLOWED_HOSTS[0] if SELF_MAIL else "totheweb.fr")
-DEFAULT_FROM_EMAIL = "%s <%s@%s>" % (PROJECT_VERBOSE, MAIL_USER, ALLOWED_HOSTS[0] if SELF_MAIL else "totheweb.fr")
+EMAIL_HOST_USER = f"{MAIL_USER}@{HOST}"
+SERVER_EMAIL = f"{MAIL_USER}+{PROJECT}@{HOST}"
+DEFAULT_FROM_EMAIL = f"{PROJECT_VERBOSE} <{MAIL_USER}@{HOST}>"
 EMAIL_HOST_PASSWORD = (CONF_DIR / "email_password").open().read().strip()
 EMAIL_BACKEND = 'django.core.mail.backends.%s' % ('locmem.EmailBackend' if DEBUG else 'smtp.EmailBackend')
-REPLY_TO = 'association.caracole@gmail.com'
+REPLY_TO = 'contact@caracole.io'
 
 
 ADMINS = (("Guilhem Saurel", f"guilhem+admin-{PROJECT}@saurel.me"),)
