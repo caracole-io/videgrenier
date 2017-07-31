@@ -61,7 +61,7 @@ class RegistrationTests(TestCase):
         self.assertIn("Veuillez consulter votre boîte mail pour terminer le processus d'enregistrement",
                       ret.content.decode())
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, 'Activation du compte sur vide grenier caracole')
+        self.assertEqual(mail.outbox[0].subject, 'Activation du compte sur Caracole')
         self.assertIn('caracole.io/accounts/activate/', mail.outbox[0].body)
 
 
