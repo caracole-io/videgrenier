@@ -4,6 +4,7 @@ from django.views.generic import RedirectView, TemplateView
 
 from .views import profil, profil_password
 
+app_name = 'caracole'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
