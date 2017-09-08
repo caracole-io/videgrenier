@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'registration',
     'videgrenier',
+    'cagnottesolidaire',
 ]
 
 MIDDLEWARE_CLASSES = [
