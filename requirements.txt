@@ -6,6 +6,7 @@
 #
 -e git+git://github.com/Nim65s/cagnottesolidaire.git#egg=cagnottesolidaire
 -e git+git://github.com/Nim65s/django-YummyEmailOrUsernameInsensitiveAuth.git#egg=django-yeouia
+-e git+git://github.com/Nim65s/ndh.git#egg=ndh
 django-autoslug==1.9.3
 django-bootstrap3==9.0.0
 django-registration-redux==1.7

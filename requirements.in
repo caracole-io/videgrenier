@@ -4,3 +4,4 @@ django-registration-redux
 psycopg2
 -e git://github.com/Nim65s/django-YummyEmailOrUsernameInsensitiveAuth.git#egg=django-yeouia
 -e git://github.com/Nim65s/cagnottesolidaire.git#egg=cagnottesolidaire
+-e git://github.com/Nim65s/ndh.git#egg=ndh
