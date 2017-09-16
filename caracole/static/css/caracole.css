@@ -1,12 +1,5 @@
 body { padding-top: 70px; }
 
-.euro { font-family: 'Source Code Pro', monospace; }
-.euro:after { content: ' €'; }
-.at:after { content: '@'; }
-.dot:after { content: '.'; }
-.mail:before { content: '<'; }
-.mail:after { content: '>'; }
-
 h1 {
 	text-align: center;
 	font-family: "DejaVu Sans Mono";
