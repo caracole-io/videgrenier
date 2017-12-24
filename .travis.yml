@@ -5,7 +5,7 @@ python:
 services:
   - postgresql
 install:
-  - pip install python-coveralls flake8 -r requirements.txt
+  - pip install python-coveralls flake8 -r requirements.txt safety
   - sudo mkdir -p /etc/django/caracole
   - sudo chmod -R 777 /etc/django
   - echo pipo > /etc/django/caracole/secret_key.txt
@@ -18,5 +18,6 @@ before_script:
 script:
   - coverage run manage.py test
   - flake8 .
+  - safety check
 after_success:
   - coveralls
