@@ -69,7 +69,7 @@ def reservation(request):
     ok = True
     try:
         reserv = request.user.caracolien.reservation
-    except:
+    except Exception as e:
         reserv = None
         return redirect('videgrenier:fini')
     forms = [UserForm(request.POST or None, instance=request.user),
