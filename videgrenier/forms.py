@@ -9,6 +9,7 @@ class ReservationForm(ModelForm):
         model = Reservation
         exclude = ['user', 'accepte']
 
+
 class UserForm(ModelForm):
     class Meta:
         model = User

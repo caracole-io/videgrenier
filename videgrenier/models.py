@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import RegexValidator
-from django.urls import reverse
 from django.db import models
 from django.template.loader import get_template
+from django.urls import reverse
 
 
 class Reservation(models.Model):

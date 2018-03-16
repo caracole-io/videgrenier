@@ -1,10 +1,10 @@
 from datetime import date, timedelta
 from random import randint
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
 from django.core import mail
-from django.urls import reverse
 from django.test import TestCase
+from django.urls import reverse
 
 from videgrenier.models import Reservation
 

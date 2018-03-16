@@ -1,23 +1,12 @@
 language: python
-sudo: required
 python:
-  - 3.6
-services:
-  - postgresql
+    - 3.6
 install:
-  - pip install python-coveralls flake8 -r requirements.txt safety
-  - sudo mkdir -p /etc/django/caracole
-  - sudo chmod -R 777 /etc/django
-  - echo pipo > /etc/django/caracole/secret_key.txt
-  - echo pipo > /etc/django/caracole/email_password
-  - echo pipo > /etc/django/caracole/db_password.txt
-before_script:
-  - psql -c "create user caracole with password 'pipo';" -U postgres
-  - psql -c "alter user caracole createdb;" -U postgres
-  - psql -c "create database caracole owner caracole;" -U postgres
+    - pip install -r requirements.txt flake8 python-coveralls safety
 script:
-  - coverage run manage.py test
-  - flake8 .
-  - safety check
+    - ./manage.py migrate
+    - coverage run manage.py test
+    - flake8 .
+    - safety check
 after_success:
-  - coveralls
+    - coveralls

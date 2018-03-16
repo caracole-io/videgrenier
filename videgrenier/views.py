@@ -1,25 +1,25 @@
 import csv
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse, reverse_lazy
-from django.db.models import Sum
-from django.db.models.functions import Coalesce
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView, UpdateView
+
+from ndh.utils import query_sum
 
 from .forms import ReservationForm, UserForm
 from .models import Reservation
-
-from ndh.utils import query_sum
 
 
 class StaffRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_staff
+
 
 class ReservationListView(StaffRequiredMixin, ListView):
     model = Reservation
@@ -53,9 +53,12 @@ class ReservationDetailView(ReservationUserMixin, DetailView):
         def get_infos(obj, field):
             return obj._meta.get_field(field).verbose_name, obj.__dict__[field]
 
-        infos = [get_infos(self.object.user, f) for f in ['last_name', 'first_name']
-        ] + [get_infos(self.object, f) for f in ['birthdate', 'birthplace', 'id_num', 'id_date', 'id_org', 'plaque',
-                                                 'phone_number', 'address']]
+        infos = [
+            get_infos(self.object.user, f) for f in ['last_name', 'first_name']
+        ] + [
+            get_infos(self.object, f) for f in ['birthdate', 'birthplace', 'id_num', 'id_date', 'id_org', 'plaque',
+                                                'phone_number', 'address']
+        ]
         return super().get_context_data(infos=infos, **kwargs)
 
 
