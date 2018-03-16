@@ -27,7 +27,7 @@ services:
       - default
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host: caracole.${DOMAIN_NAME:-io}"
+      - "traefik.frontend.rule=Host: videgrenier.${DOMAIN_NAME:-local}"
       - "traefik.docker.network=traefik"
   nginx:
     image: nim65s/ndh:nginx
@@ -38,7 +38,7 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host: caracole.${DOMAIN_NAME:-io}; PathPrefix: /static, /media"
+      - "traefik.frontend.rule=Host: videgrenier.${DOMAIN_NAME:-local}; PathPrefix: /static, /media"
 
 networks:
   traefik:
