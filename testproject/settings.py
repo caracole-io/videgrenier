@@ -1,7 +1,7 @@
 import os
 
 PROJECT = 'videgrenier'
-PROJECT_VERBOSE = PROJECT.capitalize()
+PROJECT_VERBOSE = 'Vide Grenier'
 
 DOMAIN_NAME = os.environ.get('DOMAIN_NAME', 'local')
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST', f'{PROJECT}.{DOMAIN_NAME}')]
@@ -66,7 +66,7 @@ DB = os.environ.get('DB', 'db.sqlite3')
 DATABASES = {
     'default': {
         'ENGINE': f'django.db.backends.sqlite3',
-        'NAME': join(BASE_DIR, DB),
+        'NAME': os.path.join(BASE_DIR, DB),
     }
 }
 if DB == 'postgres':
