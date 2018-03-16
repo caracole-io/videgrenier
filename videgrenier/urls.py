@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path
 from django.views.generic import TemplateView
 
 from .views import (csview, ReservationDeleteView, ReservationDetailView,
@@ -6,14 +6,14 @@ from .views import (csview, ReservationDeleteView, ReservationDetailView,
 
 app_name = 'videgrenier'
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='videgrenier/home.html'), name='home'),
-    url(r'^plan$', TemplateView.as_view(template_name='videgrenier/plan.html'), name='plan'),
-    url(r'^reglement$', TemplateView.as_view(template_name='videgrenier/reglement.html'), name='reglement'),
-    url(r'^reservation$', reservation, name='reservation'),
-    url(r'^reservation/detail$', ReservationDetailView.as_view(), name='reservation-detail'),
-    url(r'^reservation/annuler$', ReservationDeleteView.as_view(), name='reservation-delete'),
-    url(r'^reservation/(?P<pk>\d+)/(?P<accepte>\d)$', ReservationModerateView.as_view(), name='reservation-moderate'),
-    url(r'^admin$', ReservationListView.as_view(), name='reservation-list'),
-    url(r'^csv$', csview, name='csv'),
-    url(r'^fini$', TemplateView.as_view(template_name='videgrenier/fini.html'), name='fini'),
+    path('', TemplateView.as_view(template_name='videgrenier/home.html'), name='home'),
+    path('plan', TemplateView.as_view(template_name='videgrenier/plan.html'), name='plan'),
+    path('reglement', TemplateView.as_view(template_name='videgrenier/reglement.html'), name='reglement'),
+    path('reservation', reservation, name='reservation'),
+    path('reservation/detail', ReservationDetailView.as_view(), name='reservation-detail'),
+    path('reservation/annuler', ReservationDeleteView.as_view(), name='reservation-delete'),
+    path('reservation/<int:pk>/<int:accepte>', ReservationModerateView.as_view(), name='reservation-moderate'),
+    path('admin', ReservationListView.as_view(), name='reservation-list'),
+    path('csv', csview, name='csv'),
+    path('fini', TemplateView.as_view(template_name='videgrenier/fini.html'), name='fini'),
 ]

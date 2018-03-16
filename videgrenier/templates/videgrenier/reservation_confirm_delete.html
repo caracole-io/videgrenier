@@ -1,11 +1,11 @@
 {% extends 'videgrenier/base.html' %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
 {% block videgrenier %}
 <form action="" method="post" class="form-horizontal">
   {% csrf_token %}
   <p class="text-center">Êtes-vous bien sûr de vouloir annuler votre réservation ?<br>
-  <button type="submit" class="btn btn-success">Oui !</button> -
+  <button type="submit" class="btn btn-success">Oui</button> -
   <a class="btn btn-danger" href="{% url 'videgrenier:home' %}">NON !</a>
   </p>
 </form>

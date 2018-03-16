@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
-from django.core.urlresolvers import reverse
+from django.core.validators import RegexValidator
+from django.urls import reverse
 from django.db import models
 from django.template.loader import get_template
 
-from caracole.models import Caracolien
-
 
 class Reservation(models.Model):
-    caracolien = models.OneToOneField(Caracolien)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+
     accepte = models.NullBooleanField('accepté', default=None)
     birthdate = models.DateField('date de naissance',
                                  help_text='les dates doivent être au format JJ/MM/AAAA')
@@ -21,8 +21,12 @@ class Reservation(models.Model):
     emplacements = models.IntegerField('nombre d’emplacements demandés', default=1)
     nature = models.CharField('nature des objets exposés', max_length=250, default='')
 
+    phone_regex = RegexValidator(regex=r'^\+\d{9,15}$')
+    phone_number = models.CharField('téléphone', max_length=16, validators=[phone_regex], blank=True)
+    address = models.TextField('adresse complète', blank=True)
+
     def __str__(self):
-        return str(self.caracolien)
+        return str(self.user)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -31,20 +35,20 @@ class Reservation(models.Model):
                 ctx = {'reservation': self}
                 text, html = (get_template('videgrenier/mail.%s' % alt).render(ctx) for alt in ['txt', 'html'])
                 msg = EmailMultiAlternatives('[Vide Grenier] Votre réservation', text, settings.DEFAULT_FROM_EMAIL,
-                                             [self.caracolien.user.email], reply_to=(settings.REPLY_TO,))
+                                             [self.user.email], reply_to=(settings.REPLY_TO,))
                 msg.attach_alternative(html, 'text/html')
                 msg.send()
         else:
             email_content = 'Bonjour,\n\nVotre réservation au vide grenier est désormais %s.\n\n' % self.status()
             email_content += 'L’équipe Caracole.'
             email_content += '\n\n--\n  Ce mail est automatique. Pour nous contacter, utilisez %s' % settings.REPLY_TO
-            self.caracolien.user.email_user('[Caracole][Vide Grenier] Votre réservation', email_content)
+            self.user.email_user('[Caracole][Vide Grenier] Votre réservation', email_content)
 
     def get_absolute_url(self):
         return reverse('videgrenier:reservation-detail')
 
     def prix(self):
-        return 12 if self.caracolien.adherent() else 14
+        return 12 if self.user.groups.filter(name='adherents').exists() else 14
 
     def status(self):
         if self.accepte is None:
@@ -54,5 +58,4 @@ class Reservation(models.Model):
         return 'refusée'
 
     def profil_complete(self):
-        caracolien = self.caracolien
-        return all(bool(info) for info in (caracolien.user.first_name, caracolien.user.last_name, caracolien.address))
+        return all(bool(info) for info in (self.user.first_name, self.user.last_name, self.address))

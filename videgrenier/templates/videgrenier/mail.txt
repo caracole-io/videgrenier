@@ -15,10 +15,10 @@ Merci de renvoyer cet email imprimé et signé à l'adresse suivante:
 -------------------------------------------------------------------------------------------
 recapitulatif de votre demande de stand(s) pour le vide grenier du 25 juin 2017 de Caracole
 -------------------------------------------------------------------------------------------
-Nom : {{ reservation.caracolien.user.last_name }}
-Prénom : {{ reservation.caracolien.user.first_name }}
-Adresse : {{ reservation.caracolien.address }}
-Tél : {{ reservation.caracolien.telephone }}
+Nom : {{ reservation.user.last_name }}
+Prénom : {{ reservation.user.first_name }}
+Adresse : {{ reservation.address }}
+Tél : {{ reservation.telephone }}
 Nombre d'emplacements demandé : {{ reservation.emplacements }}
 Nature des objets exposés : {{ reservation.nature }}
 
@@ -29,7 +29,7 @@ N° de pièce d'identité : {{ reservation.id_num }}
 Date de délivrance de cette pièce : {{ reservation.id_date }}
 Autorité de délivrance de cette pièce : {{ reservation.id_org }}
 
-Je soussigné {{ reservation.caracolien.user.first_name }} {{ reservation.caracolien.user.last_name }}
+Je soussigné {{ reservation.user.first_name }} {{ reservation.user.last_name }}
 prends l'entière responsabilité des objets que je mettrai en vente lors de cette manifestation et m'engage à remporter tous mes invendus en fin de journée.
 
 En signant ce document : j'atteste sur l'honneur l'exactitude des informations figurants sur celui-ci, de la même manière j'atteste sur l'honneur de ma non-participation à deux autres manifestations de même nature au cours de cette année.

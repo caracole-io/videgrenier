@@ -3,24 +3,23 @@ import csv
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.urls import reverse, reverse_lazy
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DeleteView, DetailView, ListView, UpdateView
 
-from caracole.forms import CaracolienForm, UserForm
-from caracole.mixins import StaffRequiredMixin
-
-from .forms import ReservationForm
+from .forms import ReservationForm, UserForm
 from .models import Reservation
 
+from ndh.utils import query_sum
 
-def query_sum(queryset, field):
-    return queryset.aggregate(s=Coalesce(Sum(field), 0))['s']
 
+class StaffRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_staff
 
 class ReservationListView(StaffRequiredMixin, ListView):
     model = Reservation
@@ -35,14 +34,14 @@ class ReservationModerateView(StaffRequiredMixin, UpdateView):
 
     def get(self, request, accepte, *args, **kwargs):
         reservation = self.get_object()
-        reservation.accepte = accepte == '1'
+        reservation.accepte = accepte == 1
         reservation.save()
         return HttpResponseRedirect(reverse('videgrenier:reservation-list'))
 
 
 class ReservationUserMixin(LoginRequiredMixin):
     def get_object(self, queryset=None):
-        return get_object_or_404(Reservation, caracolien__user=self.request.user)
+        return get_object_or_404(Reservation, user=self.request.user)
 
 
 class ReservationDeleteView(ReservationUserMixin, DeleteView):
@@ -54,13 +53,9 @@ class ReservationDetailView(ReservationUserMixin, DetailView):
         def get_infos(obj, field):
             return obj._meta.get_field(field).verbose_name, obj.__dict__[field]
 
-        infos = [
-            get_infos(self.object.caracolien.user, f) for f in ['last_name', 'first_name']
-        ] + [
-            get_infos(self.object.caracolien, f) for f in ['phone_number', 'address']
-        ] + [
-            get_infos(self.object, f) for f in ['birthdate', 'birthplace', 'id_num', 'id_date', 'id_org', 'plaque']
-        ]
+        infos = [get_infos(self.object.user, f) for f in ['last_name', 'first_name']
+        ] + [get_infos(self.object, f) for f in ['birthdate', 'birthplace', 'id_num', 'id_date', 'id_org', 'plaque',
+                                                 'phone_number', 'address']]
         return super().get_context_data(infos=infos, **kwargs)
 
 
@@ -68,17 +63,17 @@ class ReservationDetailView(ReservationUserMixin, DetailView):
 def reservation(request):
     ok = True
     try:
-        reserv = request.user.caracolien.reservation
+        reserv = request.user.reservation
     except Exception as e:
         reserv = None
-        return redirect('videgrenier:fini')
+        if not settings.VIDE_GRENIER_OPEN:
+            return redirect('videgrenier:fini')
     forms = [UserForm(request.POST or None, instance=request.user),
-             CaracolienForm(request.POST or None, instance=request.user.caracolien),
              ReservationForm(request.POST or None, instance=reserv)]
     if request.method == 'POST':
         for form in forms:
             if form.is_valid():
-                form.instance.caracolien = request.user.caracolien
+                form.instance.user = request.user
                 form.save()
             else:
                 ok = False
@@ -96,13 +91,13 @@ def csview(request):
     response['Content-Disposition'] = 'attachment; filename="videgrenier.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['Personne', 'email', 'Naissance', 'Adresse', 'Pièce d’identité', 'Immatriculation',
+    writer.writerow(['Personne', 'email', 'Naissance', 'Adresse', 'Téléphone', 'Pièce d’identité', 'Immatriculation',
                      'Emplacements', 'Nature', 'Accepté'])
     for reservation in Reservation.objects.all():
-        writer.writerow(['%s %s' % (reservation.caracolien.user.first_name, reservation.caracolien.user.last_name),
-                         reservation.caracolien.user.email,
+        writer.writerow(['%s %s' % (reservation.user.first_name, reservation.user.last_name),
+                         reservation.user.email,
                          '%s à %s' % (reservation.birthdate, reservation.birthplace),
-                         reservation.caracolien.address,
+                         reservation.address, reservation.phone_number,
                          'n°%s delivrée le %s par %s' % (reservation.id_num, reservation.id_date, reservation.id_org),
                          reservation.plaque,
                          reservation.emplacements,

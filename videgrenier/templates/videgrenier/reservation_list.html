@@ -4,14 +4,15 @@
 <h1>Réservations</h1>
 
 <p class="text-center">
-<a href="{% url 'videgrenier:csv' %}" class="btn btn-primary">Exporter vers un tableur</a> - 
-<a href="mailto:association.caracole@gmail.com?bcc={% for object in object_list %}{{ object.caracolien.user.email }},{% endfor %}" class="btn btn-primary">Envoyer un mail</a>
+<a href="{% url 'videgrenier:csv' %}" class="btn btn-primary">Exporter vers un tableur</a> -
+<a href="mailto:association.caracole@gmail.com?bcc={% for object in object_list %}{{ object.user.email }},{% endfor %}" class="btn btn-primary">Envoyer un mail</a>
 </p>
 <table class="table table-striped">
   <tr>
     <th>Personne</th>
     <th>Naissance</th>
     <th>Adresse</th>
+    <th>Téléphone</th>
     <th>Pièce d’identité</th>
     <th>Immatriculation</th>
     <th>Emplacements</th>
@@ -22,11 +23,12 @@
   <tr><th colspan="5">Nombre total d’emplacements</th><td>{{ total }}</td></tr>
   {% for object in object_list %}
   <tr>
-    <td><a href="mailto:{{ object.caracolien.user.email }}">
-      {{ object.caracolien.user.first_name }} {{ object.caracolien.user.last_name }}
+    <td><a href="mailto:{{ object.user.email }}">
+      {{ object.user.first_name }} {{ object.user.last_name }}
     </a></td>
     <td>Le {{ object.birthdate|date:"d/m/y" }} à {{ object.birthplace }}</td>
-    <td>{{ object.caracolien.address|linebreaks }}</td>
+    <td>{{ object.address|linebreaks }}</td>
+    <td>{{ object.phone_number }}</td>
     <td>n°{{ object.id_num }} delivrée le {{ object.id_date|date:"d/m/y" }} par {{ object.id_org }}</td>
     <td>{{ object.plaque }}</td>
     <td>{{ object.emplacements }}</td>
