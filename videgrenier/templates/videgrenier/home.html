@@ -34,7 +34,7 @@
   <a href="{% url 'videgrenier:reservation' %}" class="btn btn-primary">Accéder à l’interface de réservation</a>
   {% else %}
   <div class="alert alert-info">Avant de pouvoir vous inscrire pour le vide grenier, vous devez créer un compte:</div>
-  <a href="{% url 'auth_login' %}?next={{ request.path }}" class="btn btn-primary">Se connecter</a>
+  <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary">Se connecter</a>
   {% endif %}
 </div>
 
