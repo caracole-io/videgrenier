@@ -106,5 +106,13 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATIC_ROOT = '/srv/static/'
 
+if os.environ.get('MEMCACHED', 'False').lower() == 'true':
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': 'memcached:11211',
+        }
+    }
+
 REPLY_TO = 'test@example.com'
 VIDE_GRENIER_OPEN = True
