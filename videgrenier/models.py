@@ -10,12 +10,10 @@ class Reservation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     accepte = models.NullBooleanField('accepté', default=None)
-    birthdate = models.DateField('date de naissance',
-                                 help_text='les dates doivent être au format JJ/MM/AAAA')
+    birthdate = models.DateField('date de naissance')
     birthplace = models.CharField('lieu de naissance', max_length=250)
     id_num = models.CharField('numéro de la pièce d’identité', max_length=100)
-    id_date = models.DateField('date de délivrance de la pièce d’identité',
-                               help_text='les dates doivent être au format JJ/MM/AAAA')
+    id_date = models.DateField('date de délivrance de la pièce d’identité')
     id_org = models.CharField('organisme délivrant la pièce d’identité', max_length=100)
     plaque = models.CharField('numéro d’immatriculation du véhicule', max_length=20)
     emplacements = models.IntegerField('nombre d’emplacements demandés', default=1)
