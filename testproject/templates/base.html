@@ -5,5 +5,19 @@
 {% block sitetitle %}Vide Grenier{% endblock %}
 
 {% block navbarleft %}
-<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" id="videgrenierDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+    Vide Grenier
+  </a>
+  <div class="dropdown-menu" aria-labelledby="videgrenierDropdown">
+      <a class="dropdown-item" href="{% url 'videgrenier:home' %}">Accueil</a>
+      <a class="dropdown-item" href="{% url 'videgrenier:reservation' %}">Réservation</a>
+      <a class="dropdown-item" href="{% url 'videgrenier:plan' %}">Plan d’accès</a>
+      <a class="dropdown-item" href="{% url 'videgrenier:reglement' %}">Règlement</a>
+      {% if request.user.is_staff %}
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="{% url 'videgrenier:reservation-list' %}">Adminstration</a>
+      {% endif %}
+  </div>
+</li>
 {% endblock %}
