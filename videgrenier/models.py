@@ -19,7 +19,7 @@ class Reservation(models.Model):
     emplacements = models.IntegerField('nombre d’emplacements demandés', default=1)
     nature = models.CharField('nature des objets exposés', max_length=250, default='')
 
-    phone_regex = RegexValidator(regex=r'^\+\d{9,15}$')
+    phone_regex = RegexValidator(regex=r'^[+0]\d{9,15}$')
     phone_number = models.CharField('téléphone', max_length=16, validators=[phone_regex], blank=True)
     address = models.TextField('adresse complète', blank=True)
 
