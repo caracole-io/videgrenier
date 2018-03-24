@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 from random import randint
 
+from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.core import mail
 from django.test import TestCase
@@ -78,3 +79,9 @@ class VideGrenierTests(TestCase):
         email_user = mail.outbox[-1]
         self.assertEqual(email_user.to, ['a@example.org'])
         self.assertIn('grenier est désormais acceptée', email_user.body)
+
+    # Dates
+    def test_dates(self):
+        self.assertLess(settings.DATES_VIDE_GRENIER['open'], settings.DATES_VIDE_GRENIER['close'])
+        self.assertLess(settings.DATES_VIDE_GRENIER['close'], settings.DATES_VIDE_GRENIER['event'])
+        # TODO with self.settings(DATES_VIDE_GRENIER=...):

@@ -1,4 +1,5 @@
 import os
+from datetime import date
 
 PROJECT = 'videgrenier'
 PROJECT_VERBOSE = 'Vide Grenier'
@@ -115,4 +116,8 @@ if os.environ.get('MEMCACHED', 'False').lower() == 'true':
     }
 
 REPLY_TO = 'test@example.com'
-VIDE_GRENIER_OPEN = True
+DATES_VIDE_GRENIER = {
+    'open': date(2018, 4, 4),
+    'close': date(2018, 6, 20),
+    'event': date(2018, 6, 24),
+}

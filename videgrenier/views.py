@@ -69,7 +69,7 @@ def reservation(request):
         reserv = request.user.reservation
     except Exception as e:
         reserv = None
-        if not settings.VIDE_GRENIER_OPEN:
+        if not (settings.DATES_VIDE_GRENIER['open'] <= date.today() <= settings.DATES_VIDE_GRENIER['close']):
             return redirect('videgrenier:fini')
     forms = [UserForm(request.POST or None, instance=request.user),
              ReservationForm(request.POST or None, instance=reserv)]
