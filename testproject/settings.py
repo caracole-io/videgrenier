@@ -52,6 +52,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'ndh.context_processors.settings_constants',
             ],
         },
     },
@@ -121,3 +122,7 @@ DATES_VIDE_GRENIER = {
     'close': date(2018, 6, 20),
     'event': date(2018, 6, 24),
 }
+
+NDH_TEMPLATES_SETTINGS = [
+    'DATES_VIDE_GRENIER',
+]

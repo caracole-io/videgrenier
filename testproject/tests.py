@@ -4,6 +4,7 @@ from random import randint
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.core import mail
+from django.template.defaultfilters import date as date_filter
 from django.test import TestCase
 from django.urls import reverse
 
@@ -84,4 +85,6 @@ class VideGrenierTests(TestCase):
     def test_dates(self):
         self.assertLess(settings.DATES_VIDE_GRENIER['open'], settings.DATES_VIDE_GRENIER['close'])
         self.assertLess(settings.DATES_VIDE_GRENIER['close'], settings.DATES_VIDE_GRENIER['event'])
-        # TODO with self.settings(DATES_VIDE_GRENIER=...):
+        for status in ['open', 'close', 'event']:
+            self.assertIn(date_filter(settings.DATES_VIDE_GRENIER[status], 'j F o'),
+                          self.client.get(reverse('videgrenier:home')).content.decode())
