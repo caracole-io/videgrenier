@@ -16,7 +16,7 @@
       <a class="dropdown-item" href="{% url 'videgrenier:reglement' %}">Règlement</a>
       {% if request.user.is_staff %}
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="{% url 'videgrenier:reservation-list' %}">Adminstration</a>
+      <a class="dropdown-item" href="{% url 'videgrenier:reservation-list' %}">Administration</a>
       {% endif %}
   </div>
 </li>
