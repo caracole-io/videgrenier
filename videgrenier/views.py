@@ -108,3 +108,8 @@ def csview(request):
                          reservation.nature,
                          'Oui' if reservation.accepte else 'Non'])
     return response
+
+
+class FiniView(TemplateView):
+    def get_template_name(self):
+        return ['videgrenier/%s.html' % ('apres' if date.today() >= settings.DATES_VIDE_GRENIER['close'] else 'avant')]

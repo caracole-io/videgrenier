@@ -14,5 +14,5 @@ urlpatterns = [
     path('reservation/<int:pk>/<int:accepte>', views.ReservationModerateView.as_view(), name='reservation-moderate'),
     path('admin', views.ReservationListView.as_view(), name='reservation-list'),
     path('csv', views.csview, name='csv'),
-    path('fini', TemplateView.as_view(template_name='videgrenier/fini.html'), name='fini'),
+    path('fini', views.FiniView.as_view(), name='fini'),
 ]
