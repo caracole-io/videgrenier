@@ -111,5 +111,5 @@ def csview(request):
 
 
 class FiniView(TemplateView):
-    def get_template_name(self):
+    def get_template_names(self):
         return ['videgrenier/%s.html' % ('apres' if date.today() >= settings.DATES_VIDE_GRENIER['close'] else 'avant')]
