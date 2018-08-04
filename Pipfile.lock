@@ -1,0 +1,56 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "1a325cff48a51e355334bfd97b8a2c96892268183f776502774d4ef352d7ed74"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.6"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "django": {
+            "hashes": [
+                "sha256:7f246078d5a546f63c28fc03ce71f4d7a23677ce42109219c24c9ffb28416137",
+                "sha256:ea50d85709708621d956187c6b61d9f9ce155007b496dd914fdb35db8d790aec"
+            ],
+            "version": "==2.1"
+        },
+        "django-autoslug-iplweb": {
+            "hashes": [
+                "sha256:6ddec119072067e78cbdb53f7ba11ae8bee5a2f2f0fe1d90c6a4d3c0a91489d3",
+                "sha256:8a3ba49b18f082e29ac9cb17884d4b2149ad14988bd89e118b1c5ddf94fdea8e"
+            ],
+            "version": "==1.9.4"
+        },
+        "django-bootstrap4": {
+            "hashes": [
+                "sha256:6db4a27b33851833e68b96344f9df063150dcace8d4787ebfc21eceb55196945"
+            ],
+            "version": "==0.0.6"
+        },
+        "ndh": {
+            "hashes": [
+                "sha256:38b8538066387c15acda2ffc9860ad25e27bf280c79866b55259aed2e356956b",
+                "sha256:66b39dd5e2e9598f759b33b2f5d8d2e0761aabb130d550b89f0cdb88b9f9f5db"
+            ],
+            "index": "pypi",
+            "version": "==3.7.1"
+        },
+        "pytz": {
+            "hashes": [
+                "sha256:a061aa0a9e06881eb8b3b2b43f05b9439d6583c206d0a6c340ff72a7b6669053",
+                "sha256:ffb9ef1de172603304d9d2819af6f5ece76f2e85ec10692a524dd876e72bf277"
+            ],
+            "version": "==2018.5"
+        }
+    },
+    "develop": {}
+}
