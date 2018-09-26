@@ -28,9 +28,15 @@ class Migration(migrations.Migration):
                 ('plaque', models.CharField(max_length=20, verbose_name='numéro d’immatriculation du véhicule')),
                 ('emplacements', models.IntegerField(default=1, verbose_name='nombre d’emplacements demandés')),
                 ('nature', models.CharField(default='', max_length=250, verbose_name='nature des objets exposés')),
-                ('phone_number', models.CharField(blank=True, max_length=16, validators=[django.core.validators.RegexValidator(regex='^\\+\\d{9,15}$')], verbose_name='téléphone')),
+                ('phone_number',
+                 models.CharField(
+                     blank=True,
+                     max_length=16,
+                     validators=[django.core.validators.RegexValidator(regex='^\\+\\d{9,15}$')],
+                     verbose_name='téléphone')),
                 ('address', models.TextField(blank=True, verbose_name='adresse complète')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(
+                    on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

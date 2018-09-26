@@ -14,6 +14,10 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reservation',
             name='phone_number',
-            field=models.CharField(blank=True, max_length=16, validators=[django.core.validators.RegexValidator(regex='^[+0]\\d{9,15}$')], verbose_name='téléphone'),
+            field=models.CharField(
+                blank=True,
+                max_length=16,
+                validators=[django.core.validators.RegexValidator(regex='^[+0]\\d{9,15}$')],
+                verbose_name='téléphone'),
         ),
     ]

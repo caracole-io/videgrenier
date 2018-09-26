@@ -32,8 +32,11 @@ class Reservation(models.Model):
             if self.profil_complete():
                 ctx = {'reservation': self}
                 text, html = (get_template('videgrenier/mail.%s' % alt).render(ctx) for alt in ['txt', 'html'])
-                msg = EmailMultiAlternatives('[Vide Grenier] Votre réservation', text, settings.DEFAULT_FROM_EMAIL,
-                                             [self.user.email], reply_to=(settings.REPLY_TO,))
+                msg = EmailMultiAlternatives(
+                    '[Vide Grenier] Votre réservation',
+                    text,
+                    settings.DEFAULT_FROM_EMAIL, [self.user.email],
+                    reply_to=(settings.REPLY_TO, ))
                 msg.attach_alternative(html, 'text/html')
                 msg.send()
         else:

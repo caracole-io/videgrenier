@@ -86,5 +86,6 @@ class VideGrenierTests(TestCase):
         self.assertLess(settings.DATES_VIDE_GRENIER['open'], settings.DATES_VIDE_GRENIER['close'])
         self.assertLess(settings.DATES_VIDE_GRENIER['close'], settings.DATES_VIDE_GRENIER['event'])
         for status in ['open', 'close', 'event']:
-            self.assertIn(date_filter(settings.DATES_VIDE_GRENIER[status], 'j F o'),
-                          self.client.get(reverse('videgrenier:home')).content.decode())
+            self.assertIn(
+                date_filter(settings.DATES_VIDE_GRENIER[status], 'j F o'),
+                self.client.get(reverse('videgrenier:home')).content.decode())
