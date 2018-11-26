@@ -12,7 +12,6 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 with open(os.path.join(os.path.dirname(__file__), 'Pipfile')) as pipfile:
     content = pipfile.read()
     REQUIREMENTS = re.findall('''\\n *['"]?([\w-]*)['"]? *=''', content.split('packages]')[1])
-    PYTHON_VERSION = re.search('''python_version *= *['"]*([\d.]+)['"]?''', content)[1]
 
 VERSION = [tag for tag in check_output(['git', 'tag', '-l']).decode().split() if tag.startswith('v')][-1][1:]
 
@@ -32,7 +31,7 @@ setup(
     url='https://github.com/caracole-io/videgrenier',
     author='Guilhem Saurel',
     author_email='webmaster@caracole.io',
-    python_requires=f'>={PYTHON_VERSION}',
+    python_requires=f'>=3.6',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -41,6 +40,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
