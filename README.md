@@ -4,11 +4,9 @@
 
 ## Reverse Proxy
 
-This app needs a reverse proxy, like [proxyta.net](https://framagit.org/nim65s/proxyta.net)
+This app needs a reverse proxy, like [proxyta.net](https://framagit.org/oxyta.net/proxyta.net)
 
 ## Dev
-
-Make sure `videgrenier.local` resolves to `localhost`, and:
 
 ```
 echo POSTGRES_PASSWORD=$(openssl rand -base64 32) >> .env

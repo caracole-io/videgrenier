@@ -1,8 +1,8 @@
 version: '3'
 
-volumes:
-  srv:
-  sql:
+networks:
+  web:
+    external: true
 
 services:
   postgres:
@@ -11,38 +11,36 @@ services:
     env_file:
       - .env
     volumes:
-      - "sql:/var/lib/postgresql/data"
+      - ${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/sql:/var/lib/postgresql/data
+
   memcached:
     image: memcached:alpine
     restart: unless-stopped
+
   app:
     build: .
     restart: unless-stopped
-    volumes:
-      - "srv:/srv"
-    env_file:
-      - .env
     environment:
       - DB=postgres
       - MEMCACHED=True
+    env_file:
+      - .env
+    volumes:
+      - ${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/srv:/srv
     networks:
-      - proxytanet
+      - web
       - default
     labels:
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host: videgrenier.${DOMAIN_NAME:-local}"
-      - "traefik.docker.network=proxytanet"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host: videgrenier.${DOMAIN_NAME:-localhost}"
+
   nginx:
     image: nim65s/ndh:nginx
     restart: unless-stopped
     volumes:
-      - "srv:/srv"
-    networks:
-      - proxytanet
+      - ${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/srv:/srv:ro
     labels:
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host: videgrenier.${DOMAIN_NAME:-local}; PathPrefix: /static, /media"
-
-networks:
-  proxytanet:
-    external: true
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host: videgrenier.${DOMAIN_NAME:-localhost}; PathPrefix: /static, /media"
+    networks:
+      - web
