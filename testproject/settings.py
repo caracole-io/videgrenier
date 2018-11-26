@@ -4,7 +4,7 @@ from datetime import date
 PROJECT = 'videgrenier'
 PROJECT_VERBOSE = 'Vide Grenier'
 
-DOMAIN_NAME = os.environ.get('DOMAIN_NAME', 'local')
+DOMAIN_NAME = os.environ.get('DOMAIN_NAME', 'localhost')
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST', f'{PROJECT}.{DOMAIN_NAME}')]
 ALLOWED_HOSTS += [f'www.{host}' for host in ALLOWED_HOSTS]
 
