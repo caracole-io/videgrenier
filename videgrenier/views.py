@@ -66,7 +66,7 @@ def reservation(request):
     ok = True
     try:
         reserv = request.user.reservation
-    except Exception as e:
+    except Exception:
         reserv = None
         if not (settings.DATES_VIDE_GRENIER['open'] <= date.today() <= settings.DATES_VIDE_GRENIER['close']):
             return redirect('videgrenier:fini')
