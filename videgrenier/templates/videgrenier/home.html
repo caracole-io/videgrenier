@@ -1,6 +1,10 @@
-{% extends "base.html" %}{% load static %}
+{% extends "videgrenier.html" %}{% load static %}
 
-{% block content %}
+{% block breadcrumb %}
+<li class="breadcrumb-item active" aria-current="page">Vide Grenier</li>
+{% endblock %}
+
+{% block videgrenier %}
 <h1>Vide Grenier</h1>
 
 <p>Vers une manifestation qui intègre un développement durable, solidaire et citoyen.</p>
@@ -14,10 +18,12 @@
 <h2>Informations pratiques</h2>
 
 <dl class="row">
-  <dt class="col-sm-3">Date du vide grenier</dt><dd class="col-sm-9">{{ DATES_VIDE_GRENIER.event }}</dd>
+  <dt class="col-sm-3">Date du vide grenier</dt><dd class="col-sm-9">{{ DATES_VIDE_GRENIER.event }}, de 8h à 18h</dd>
   <dt class="col-sm-3">Début des inscriptions</dt><dd class="col-sm-9">{{ DATES_VIDE_GRENIER.open }}</dd>
   <dt class="col-sm-3">Fin des inscriptions</dt><dd class="col-sm-9">{{ DATES_VIDE_GRENIER.close }}</dd>
-  <dt class="col-sm-3">Téléphone</dt><dd class="col-sm-9">0783916633 uniquement le mercredi lors des permanences, de 14h30 à 18h00</dd>
+  <dt class="col-sm-3">Téléphone</dt><dd class="col-sm-9">0783916633 uniquement les
+  {% for date in DATES_VIDE_GRENIER.inscriptions %}{{ date }}, {% endfor %}
+  lors des permanences, de 15h00 à 19h00</dd>
 </dl>
 
 <h2>Prix de l’emplacement</h2>
@@ -31,10 +37,10 @@
 <h2>Inscription</h2>
 <div class="text-center">
   {% if request.user.is_authenticated %}
-  <a href="{% url 'videgrenier:reservation' %}" class="btn btn-primary">Accéder à l’interface de réservation</a>
+  <a href="{% url 'videgrenier:reservation' %}" class="btn btn-primary" role="button">Accéder à l’interface de réservation</a>
   {% else %}
   <div class="alert alert-info">Avant de pouvoir vous inscrire pour le vide grenier, vous devez créer un compte:</div>
-  <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary">Se connecter</a>
+  <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary" role="button">Se connecter</a>
   {% endif %}
 </div>
 

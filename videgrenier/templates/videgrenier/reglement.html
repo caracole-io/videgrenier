@@ -1,7 +1,9 @@
-{% extends "base.html" %}
+{% extends "videgrenier.html" %}
 {% load ndh %}
 
-{% block content %}
+{% block breadpage %}Règlemente{% endblock %}
+
+{% block videgrenier %}
 <h1>Vide Grenier: Réglement</h1>
 
 <p>
@@ -16,7 +18,7 @@ L’association Caracole organise le {{ DATES_VIDE_GRENIER.event }} une journée
     salariés de l'association bénéficient d'un tarif préférentiel pour un stand, respectivement, 12 et 10 €. Sur ce
     droit 2 euros sont collectés pour la mairie de Ramonville au titre de la Redevance pour l'utilisation du
     domaine public. Cette somme sera reversée à la mairie.</li>
-  <li> Les stands peuvent être réservés dans la limite des places disponibles jusqu'au 21/06/2017. L’exposant devra
+  <li> Les stands peuvent être réservés dans la limite des places disponibles jusqu'au {{ DATES_VIDE_GRENIER.close }}. L’exposant devra
     avoir acquitté son droit de place avant son installation. </li>
   <li> Il est strictement interdit de vendre tout type d'arme (y compris couteaux à longue lame), des animaux,
     de la nourriture.</li>
@@ -40,6 +42,5 @@ Vous disposez d’un droit d’accès, de modification, de rectification et de s
 « Informatique et Libertés » du 6 janvier 1978). Pour toute demande, adressez-vous à :
 {% show_email "association.caracole@gmail.com" %}
 </p>
-
 
 {% endblock %}

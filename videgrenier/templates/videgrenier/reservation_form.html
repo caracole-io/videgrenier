@@ -1,7 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'videgrenier.html' %}
 {% load bootstrap4 %}
 
-{% block content %}
+{% block breadpage %}Réservation{% endblock %}
+
+{% block videgrenier %}
 <h1>Réserver votre place</h1>
 <form action="" method="post" class="form-horizontal">
   {% csrf_token %}

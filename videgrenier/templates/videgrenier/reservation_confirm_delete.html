@@ -1,7 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'videgrenier.html' %}
 {% load bootstrap4 %}
 
-{% block content %}
+{% block breadpage %}Suppression de réservation{% endblock %}
+
+{% block videgrenier %}
 <form action="" method="post" class="form-horizontal">
   {% csrf_token %}
   <p class="text-center">Êtes-vous bien sûr de vouloir annuler votre réservation ?<br>
@@ -10,4 +12,3 @@
   </p>
 </form>
 {% endblock %}
-
