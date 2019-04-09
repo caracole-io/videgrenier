@@ -17,7 +17,7 @@
 </div>
 {% else %}
 <div class="alert alert-{{ object.accepte|yesno:"success,danger,info" }} text-center" role="alert">
-  <p>Votre réservation est {{ object.accepte|yesno:"acceptée,refusée,en cours de traitement" }}.</p>
+  <p>Votre réservation est {{ object.accepte|yesno:"acceptée,refusée,en cours de traitement. Merci de consulter vos mails pour la validation de l’inscription." }}.</p>
 </div>
 {% endif %}
 

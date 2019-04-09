@@ -17,13 +17,20 @@
 
 <h2>Informations pratiques</h2>
 
+<p>Préinscriptions sur <a href="{% url 'videgrenier:reservation' %}">ce site</a>, permanences pour:
+<ul>
+  <li>Finalisation des inscriptions</li>
+  <li>Dépôt des dossiers complets</li>
+  <li>Choix des emplacements</li>
+</ul>
+</p>
+
 <dl class="row">
   <dt class="col-sm-3">Date du vide grenier</dt><dd class="col-sm-9">{{ DATES_VIDE_GRENIER.event }}, de 8h à 18h</dd>
   <dt class="col-sm-3">Début des inscriptions</dt><dd class="col-sm-9">{{ DATES_VIDE_GRENIER.open }}</dd>
   <dt class="col-sm-3">Fin des inscriptions</dt><dd class="col-sm-9">{{ DATES_VIDE_GRENIER.close }}</dd>
-  <dt class="col-sm-3">Téléphone</dt><dd class="col-sm-9">0783916633 uniquement les
-  {% for date in DATES_VIDE_GRENIER.inscriptions %}{{ date }}, {% endfor %}
-  lors des permanences, de 15h00 à 19h00</dd>
+  <dt class="col-sm-3">Téléphone</dt><dd class="col-sm-9">07 83 91 66 33</dd>
+  <dt class="col-sm-3">Permanences</dt><dd class="col-sm-9">{% for date in DATES_VIDE_GRENIER.inscriptions %}{{ date }}, {% endfor %} de 14h00 à 18h00</dd>
 </dl>
 
 <h2>Prix de l’emplacement</h2>
