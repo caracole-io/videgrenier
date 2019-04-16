@@ -21,6 +21,10 @@
     </blockquote>
     </p>
 
+    <p>Permanences de 14h00 à 18h00 pour dépôt de dossier et choix des emplacements:
+    <ul>{% for date in DATES_VIDE_GRENIER.inscriptions %}<li>{{ date }}</li>{% endfor %}</ul>
+    </p>
+
     <h2> recapitulatif de votre demande de stand(s) pour le vide grenier du {{ DATES_VIDE_GRENIER.event }} de Caracole </h2>
     <dl>
       <dt>Nom</dt><dd>{{ reservation.user.last_name }}</dd>
