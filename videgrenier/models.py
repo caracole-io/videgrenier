@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.template.loader import get_template
 from django.urls import reverse
+from dmdm import send_mail
 
 
 class Reservation(models.Model):
@@ -30,15 +31,10 @@ class Reservation(models.Model):
         super().save(*args, **kwargs)
         if self.accepte is None:
             if self.profil_complete():
-                ctx = {'reservation': self}
-                text, html = (get_template('videgrenier/mail.%s' % alt).render(ctx) for alt in ['txt', 'html'])
-                msg = EmailMultiAlternatives(
-                    '[Vide Grenier] Votre réservation',
-                    text,
-                    settings.DEFAULT_FROM_EMAIL, [self.user.email],
-                    reply_to=(settings.REPLY_TO, ))
-                msg.attach_alternative(html, 'text/html')
-                msg.send()
+                send_mail('[Vide Grenier] Votre réservation',
+                          'videgrenier/mail.md',
+                          settings.DEFAULT_FROM_EMAIL, [self.user.email], {'reservation': self},
+                          reply_to=(settings.REPLY_TO, ))
         else:
             email_content = 'Bonjour,\n\nVotre réservation au vide grenier est désormais %s.\n\n' % self.status()
             email_content += 'L’équipe Caracole.'
