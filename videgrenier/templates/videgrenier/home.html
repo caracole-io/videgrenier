@@ -52,5 +52,9 @@
 </div>
 
 <h2>Charte</h2>
-<embed src="{% static 'documents/CharteVideGrenier-2015.pdf' %}" width="100%" height="1000" type='application/pdf'>
+<object data="{% static 'documents/CharteVideGrenier-2015.pdf' %}"
+  type="application/pdf" width="100%" height="1000px" typemustmatch>
+    <p>Vous n'avez pas de plugin pour lire des fichiers PDF mais vous pouvez
+    <a href="{% static 'documents/CharteVideGrenier-2015.pdf' %}">télécharger le fichier PDF correspondant.</a></p>
+</object>
 {% endblock %}
