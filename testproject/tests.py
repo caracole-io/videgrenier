@@ -65,7 +65,7 @@ class VideGrenierTests(TestCase):
         # la réservation vient d’être créée, gros mail
         email_user = mail.outbox[-1]
         self.assertEqual(email_user.to, ['a@example.org'])
-        self.assertIn('est maintenant active', email_user.body)
+        self.assertIn('Vous avez effectué une demande d’inscription', email_user.body)
 
         # d refuse la réservation: la réservation est refusée, a & c reçoivent des mails correspondants
         self.client.get(reverse('videgrenier:reservation-moderate', kwargs={'pk': reservation.pk, 'accepte': 0}))
@@ -86,6 +86,5 @@ class VideGrenierTests(TestCase):
         self.assertLess(settings.DATES_VIDE_GRENIER['open'], settings.DATES_VIDE_GRENIER['close'])
         self.assertLess(settings.DATES_VIDE_GRENIER['close'], settings.DATES_VIDE_GRENIER['event'])
         for status in ['open', 'close', 'event']:
-            self.assertIn(
-                date_filter(settings.DATES_VIDE_GRENIER[status], 'j F o'),
-                self.client.get(reverse('videgrenier:home')).content.decode())
+            self.assertIn(date_filter(settings.DATES_VIDE_GRENIER[status], 'j F o'),
+                          self.client.get(reverse('videgrenier:home')).content.decode())
