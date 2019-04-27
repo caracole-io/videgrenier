@@ -1,8 +1,13 @@
-{% extends "videgrenier.html" %}
+{% extends "base.html" %}
 
-{% block breadpage %}Réservations{% endblock %}
+{% block title %}Vide Grenier - Administration{% endblock %}
 
-{% block videgrenier %}
+{% block breadcrumb %}
+<li class="breadcrumb-item" aria-current="page"><a href="{% url 'videgrenier:home' %}">Vide Grenier</a></li>
+<li class="breadcrumb-item active" aria-current="page">Administration</li>
+{% endblock %}
+
+{% block content %}
 <h1>Réservations</h1>
 
 <p class="text-center">
