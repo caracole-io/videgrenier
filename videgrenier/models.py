@@ -1,3 +1,4 @@
+"""Vide Grenier models."""
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
@@ -7,6 +8,7 @@ from dmdm import send_mail
 
 
 class Reservation(models.Model):
+    """Model for an user to book an emplacement, with legal details."""
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     accepte = models.NullBooleanField('accepté', default=None)
@@ -23,10 +25,12 @@ class Reservation(models.Model):
     phone_number = models.CharField('téléphone', max_length=16, validators=[phone_regex], blank=True)
     address = models.TextField('adresse complète', blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Show the user of this Reservation."""
         return str(self.user)
 
     def save(self, *args, **kwargs):
+        """Send a mail to notify validation or not."""
         super().save(*args, **kwargs)
         if self.accepte is None:
             if self.profil_complete():
@@ -40,18 +44,22 @@ class Reservation(models.Model):
             email_content += '\n\n--\n  Ce mail est automatique. Pour nous contacter, utilisez %s' % settings.REPLY_TO
             self.user.email_user('[Caracole][Vide Grenier] Votre réservation', email_content)
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
+        """Get the url of the details view for this Reservation."""
         return reverse('videgrenier:reservation-detail')
 
-    def prix(self):
+    def prix(self) -> int:
+        """Get the price for this Reservation."""
         return 12 if self.user.groups.filter(name='adherents').exists() else 14
 
-    def status(self):
+    def status(self) -> str:
+        """Get the current status as a string."""
         if self.accepte is None:
             return 'en attente de traitement'
         if self.accepte:
             return 'acceptée'
         return 'refusée'
 
-    def profil_complete(self):
+    def profil_complete(self) -> bool:
+        """Check if all forms are complete."""
         return all(bool(info) for info in (self.user.first_name, self.user.last_name, self.address))

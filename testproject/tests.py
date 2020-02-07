@@ -1,5 +1,7 @@
+"""Main test module."""
 from datetime import date, timedelta
 from random import randint
+from typing import Any, Dict
 
 from django.conf import settings
 from django.contrib.auth.models import Group, User
@@ -11,8 +13,9 @@ from django.urls import reverse
 from videgrenier.models import Reservation
 
 
-def infos(guy):
-    birthdate = date(1970, 1, 1) + timedelta(days=randint(1, 1E4))
+def infos(guy: str) -> Dict[str, Any]:
+    """Generate an account for a guy."""
+    birthdate = date(1970, 1, 1) + timedelta(days=randint(1, int(1E4)))
     age = (date.today() - birthdate).days
     return {
         'birthdate': birthdate,
@@ -26,7 +29,9 @@ def infos(guy):
 
 
 class VideGrenierTests(TestCase):
+    """Main test class."""
     def setUp(self):
+        """Create a few guys and an Adherent group."""
         adherents = Group.objects.create(name='adherents')
         for guy in 'abcd':
             user = User.objects.create_user(guy, email='%s@example.org' % guy, password=guy)
@@ -45,12 +50,14 @@ class VideGrenierTests(TestCase):
     # MODELS
 
     def test_reservation_prix(self):
+        """Test price computation for the different guys."""
         for reservation in Reservation.objects.all():
             self.assertEqual(reservation.prix(), 12 if str(reservation) == 'a' else 14)
 
     # VIEWS
 
     def test_views_status(self):
+        """Test login and access."""
         self.client.login(username='c', password='c')
         self.client.login(username='a', password='a')
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-detail')).status_code, 200)
@@ -58,6 +65,7 @@ class VideGrenierTests(TestCase):
         self.assertEqual(self.client.get(reverse('videgrenier:reservation-delete')).status_code, 200)
 
     def test_reservation_update_view(self):
+        """Test reselvation updates ."""
         reservation = Reservation.objects.get(user__username='a')
         self.assertIsNone(reservation.accepte)
         self.client.login(username='d', password='d')  # d est staff
@@ -82,7 +90,9 @@ class VideGrenierTests(TestCase):
         self.assertIn('grenier est désormais acceptée', email_user.body)
 
     # Dates
+
     def test_dates(self):
+        """Test opening / closing dates."""
         self.assertLess(settings.DATES_VIDE_GRENIER['open'], settings.DATES_VIDE_GRENIER['close'])
         self.assertLess(settings.DATES_VIDE_GRENIER['close'], settings.DATES_VIDE_GRENIER['event'])
         for status in ['open', 'close', 'event']:

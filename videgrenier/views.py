@@ -1,12 +1,14 @@
+"""Vide Grenier views."""
 import csv
 from datetime import date
+from typing import Any, Dict, List, Optional, Tuple
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView, TemplateView, UpdateView
@@ -18,22 +20,30 @@ from .models import Reservation
 
 
 class StaffRequiredMixin(UserPassesTestMixin):
-    def test_func(self):
+    """Mixin to check that an user has staff access."""
+    request: HttpRequest
+
+    def test_func(self) -> bool:
+        """Return the is_staff bool from the user model."""
         return self.request.user.is_staff
 
 
 class ReservationListView(StaffRequiredMixin, ListView):
+    """List all Reservation for staff."""
     model = Reservation
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> Dict[str, Any]:
+        """Add the total number of emplacements requested to the context."""
         return super().get_context_data(total=query_sum(self.model.objects.all(), 'emplacements'), **kwargs)
 
 
 class ReservationModerateView(StaffRequiredMixin, UpdateView):
+    """Accept or deny a Reservation by Staff."""
     model = Reservation
-    fields = []
+    fields: List[str] = []
 
     def get(self, request, accepte, *args, **kwargs):
+        """Set the accepted state on a Reservation by staff, and redirect to list."""
         reservation = self.get_object()
         reservation.accepte = accepte == 1
         reservation.save()
@@ -41,17 +51,27 @@ class ReservationModerateView(StaffRequiredMixin, UpdateView):
 
 
 class ReservationUserMixin(LoginRequiredMixin):
-    def get_object(self, queryset=None):
+    """Mixin to check that an User has a Reservation."""
+    request: HttpRequest
+
+    def get_object(self, queryset=None) -> Reservation:
+        """Get the Reservation for the current user, or 404."""
         return get_object_or_404(Reservation, user=self.request.user)
 
 
 class ReservationDeleteView(ReservationUserMixin, DeleteView):
+    """Let an User delete its Reservation."""
     success_url = reverse_lazy('videgrenier:home')
 
 
 class ReservationDetailView(ReservationUserMixin, DetailView):
-    def get_context_data(self, **kwargs):
-        def get_infos(obj, field):
+    """Show a Reservation details to its User."""
+    object: Reservation
+
+    def get_context_data(self, **kwargs) -> Dict[str, Any]:
+        """Get infos for the User and its Reservation."""
+        def get_infos(obj, field) -> Tuple[str, Any]:
+            """Helper function to get a field (verbose name & value) for an object in DB."""
             return obj._meta.get_field(field).verbose_name, obj.__dict__[field]
 
         infos = [get_infos(self.object.user, f) for f in ['last_name', 'first_name']] + [
@@ -62,10 +82,11 @@ class ReservationDetailView(ReservationUserMixin, DetailView):
 
 
 @login_required
-def reservation(request):
+def reservation(request: HttpRequest) -> HttpResponse:
+    """Show the 2 forms for the User and Reservation data."""
     ok = True
     try:
-        reserv = request.user.reservation
+        reserv: Optional[Reservation] = request.user.reservation
     except Exception:
         reserv = None
         if not (settings.DATES_VIDE_GRENIER['open'] <= date.today() <= settings.DATES_VIDE_GRENIER['close']):
@@ -90,7 +111,8 @@ def reservation(request):
 
 
 @staff_member_required
-def csview(request):
+def csview(request: HttpRequest) -> HttpResponse:
+    """Let the staff download a csv with all Reservation data."""
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="videgrenier.csv"'
 
@@ -110,5 +132,7 @@ def csview(request):
 
 
 class FiniView(TemplateView):
-    def get_template_names(self):
+    """View to show a static template when the vide grenier is not open."""
+    def get_template_names(self) -> List[str]:
+        """Get a list with the template name, if we are closed before or after a Vide Grenier."""
         return ['videgrenier/%s.html' % ('apres' if date.today() >= settings.DATES_VIDE_GRENIER['close'] else 'avant')]
