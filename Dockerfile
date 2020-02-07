@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.11
 
 EXPOSE 8000
 
@@ -7,11 +7,11 @@ WORKDIR /app
 
 RUN apk update -q && apk add -q --no-cache \
     py3-psycopg2 \
+ && pip3 install --no-cache-dir -U pip \
  && pip3 install --no-cache-dir \
     gunicorn \
     pipenv \
     python-memcached
-
 
 ADD Pipfile Pipfile.lock ./
 RUN pipenv install --system --deploy
