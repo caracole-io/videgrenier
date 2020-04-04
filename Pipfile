@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 ndh = "*"
 dmdm = "*"
+lxml = "==4.4.2"  # Pinned to alpine 3.9's version
 
 [dev-packages]
 setuptools-scm = "*"
