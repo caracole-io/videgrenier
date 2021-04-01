@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "videgrenier"
+version = "2.1.0"
+description = "Vide Grenier"
+authors = ["Guilhem Saurel <webmaster@caracole.io>"]
+license = "BSD-2-Clause"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+ndh = "^3.10.4"
+dmdm = "^1.4.3"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.9.0"
+yapf = "^0.31.0"
+pygments_zenburn = "^0.9.0"
+ipython = "^7.22.0"
+django-stubs = "^1.7.0"
+safety = "^1.10.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,20 +1,20 @@
 language: python
-dist: bionic
+dist: focal
 sudo: required
 python:
-  - 3.6
-  - 3.7
-  - 3.8
+  - 3.9
 services:
   - postgresql
+  - docker
 install:
-  - pip install pipenv
-  - pipenv install --deploy --dev
+  - pip install poetry psycopg2
+  - poetry config virtualenvs.create false --local
+  - poetry install --no-interaction --no-ansi
 env:
-  - SECRET_KEY='pipo' EMAIL_HOST_PASSWORD='pipo' POSTGRES_HOST='localhost' POSTGRES_PASSWORD='' RAVEN=True DSN=''
+  - SECRET_KEY='pipo' EMAIL_HOST_PASSWORD='pipo' POSTGRES_HOST='localhost' POSTGRES_PASSWORD='' RAVEN=False DSN=''
 script:
-  - python -Wa manage.py migrate
-  - PYTHONWARNINGS=always coverage run manage.py test
+  - python -Wa ./manage.py migrate
+  - PYTHONWARNINGS=always ./manage.py test
   - flake8 .
   - yapf -dr .
   - mypy .
