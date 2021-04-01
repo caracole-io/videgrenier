@@ -25,7 +25,7 @@ class StaffRequiredMixin(UserPassesTestMixin):
 
     def test_func(self) -> bool:
         """Return the is_staff bool from the user model."""
-        return self.request.user.is_staff
+        return bool(self.request.user.is_staff)
 
 
 class ReservationListView(StaffRequiredMixin, ListView):
@@ -86,13 +86,13 @@ def reservation(request: HttpRequest) -> HttpResponse:
     """Show the 2 forms for the User and Reservation data."""
     ok = True
     try:
-        reserv: Optional[Reservation] = request.user.reservation
+        reserv: Optional[Reservation] = request.user.reservation  # type: ignore
     except Exception:
         reserv = None
         if not (settings.DATES_VIDE_GRENIER['open'] <= date.today() <= settings.DATES_VIDE_GRENIER['close']):
             return redirect('videgrenier:fini')
     forms = [
-        UserForm(request.POST or None, instance=request.user),
+        UserForm(request.POST or None, instance=request.user),  # type: ignore
         ReservationForm(request.POST or None, instance=reserv)
     ]
     if request.method == 'POST':
