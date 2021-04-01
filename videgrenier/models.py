@@ -11,7 +11,7 @@ class Reservation(models.Model):
     """Model for an user to book an emplacement, with legal details."""
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
-    accepte = models.NullBooleanField('accepté', default=None)
+    accepte = models.BooleanField('accepté', default=None, null=True)
     birthdate = models.DateField('date de naissance')
     birthplace = models.CharField('lieu de naissance', max_length=250)
     id_num = models.CharField('numéro de la pièce d’identité', max_length=100)
