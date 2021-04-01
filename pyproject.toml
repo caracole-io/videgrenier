@@ -17,6 +17,7 @@ pygments_zenburn = "^0.9.0"
 ipython = "^7.22.0"
 django-stubs = "^1.7.0"
 safety = "^1.10.3"
+pydocstyle = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
