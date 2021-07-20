@@ -1,6 +1,7 @@
 # Vide Grenier
-[![Build Status](https://travis-ci.org/caracole-io/videgrenier.svg?branch=master)](https://travis-ci.org/caracole-io/videgrenier)
-[![Coverage Status](https://coveralls.io/repos/github/caracole-io/videgrenier/badge.svg?branch=master)](https://coveralls.io/github/caracole-io/videgrenier?branch=master)
+
+[![Tests](https://github.com/caracole-io/videgrenier/actions/workflows/test.yml/badge.svg)](https://github.com/caracole-io/videgrenier/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/caracole-io/videgrenier/branch/master/graph/badge.svg?token=BLGISGCYKG)](https://codecov.io/gh/caracole-io/videgrenier)
 
 ## Reverse Proxy
 
