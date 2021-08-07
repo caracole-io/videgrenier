@@ -2,12 +2,12 @@ version: '3'
 
 services:
   postgres:
-    image: postgres:10-alpine
+    image: postgres:11-alpine
     restart: unless-stopped
     env_file:
       - .env
     volumes:
-      - ${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/sql:/var/lib/postgresql/data
+      - "${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/sql:/var/lib/postgresql/data"
   memcached:
     image: memcached:alpine
     restart: unless-stopped
@@ -15,7 +15,7 @@ services:
     build: .
     restart: unless-stopped
     volumes:
-      - ${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/srv:/srv
+      - "${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/srv:/srv"
     env_file:
       - .env
     environment:
@@ -33,7 +33,7 @@ services:
     image: nim65s/ndh
     restart: unless-stopped
     volumes:
-      - ${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/srv:/srv:ro
+      - "${CHATONS_ROOT_DIR:-/srv/chatons}/videgrenier/srv:/srv:ro"
     networks:
       - web
     labels:
