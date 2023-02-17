@@ -10,7 +10,11 @@ python = "^3.9"
 ndh = "^3.10.4"
 dmdm = "^1.4.3"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
 flake8 = "^3.9.0"
 pygments_zenburn = "^0.9.0"
 ipython = "^7.22.0"
@@ -18,9 +22,6 @@ django-stubs = "^1.7.0"
 safety = "^1.10.3"
 pydocstyle = "^6.0.0"
 coverage = "^5.5"
-
-[tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
