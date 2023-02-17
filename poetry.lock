@@ -382,19 +382,19 @@ docs = ["m2r2 (>=0.2.5,<0.3.0)", "sphinx (>=2.4,<3.0)", "sphinx_rtd_theme (>=0.4
 
 [[package]]
 name = "dmdm"
-version = "1.4.5"
+version = "2.0.3"
 description = "Django MarkDown Mails"
 category = "main"
 optional = false
-python-versions = ">=3.6.2,<4.0.0"
+python-versions = ">=3.7,<4.0"
 files = [
-    {file = "dmdm-1.4.5-py3-none-any.whl", hash = "sha256:022b5bfe13087d638814822e28b59cbeb30aaffec17e80107be46da07148a640"},
-    {file = "dmdm-1.4.5.tar.gz", hash = "sha256:8fad1c97f336d81d19fd6272d4f8a7496147aa95cf1266ed21d1df69266c5b2e"},
+    {file = "dmdm-2.0.3-py3-none-any.whl", hash = "sha256:c8efa86d7a6c11d997d38167e0af2ad4082796b0971b5adf0d03eddc888473a3"},
+    {file = "dmdm-2.0.3.tar.gz", hash = "sha256:b3be786df928d5a591868240d698a6579f4ef4cfbd2d5c3c07d13687c82cb5f2"},
 ]
 
 [package.dependencies]
-Django = ">=2.2"
-mdmail = ">=0.1.3,<0.2.0"
+Django = ">=2.2,<5.0"
+nmdmail = ">=0.3.0,<0.4.0"
 
 [[package]]
 name = "dparse"
@@ -681,25 +681,6 @@ files = [
 ]
 
 [[package]]
-name = "mdmail"
-version = "0.1.3"
-description = "Send email written in Markdown"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "mdmail-0.1.3.tar.gz", hash = "sha256:57a3ab44ff0824769b36e99f8837bce5a90df736be54c09bcc36e22e93cad041"},
-]
-
-[package.dependencies]
-beautifulsoup4 = "*"
-emails = "*"
-lxml = "*"
-markdown = "*"
-premailer = "*"
-six = "*"
-
-[[package]]
 name = "ndh"
 version = "3.12.6"
 description = "Nim's Django Helpers"
@@ -714,6 +695,25 @@ files = [
 [package.dependencies]
 django-autoslug = ">=1.9.8,<2.0.0"
 django-bootstrap4 = ">=2.3.1,<3.0.0"
+
+[[package]]
+name = "nmdmail"
+version = "0.3.1"
+description = "Send emails written in Markdown"
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "nmdmail-0.3.1-py3-none-any.whl", hash = "sha256:fa382fd1f71e01dc69934d3070eca8036ddb4f3a4842eb3daec42a4e22d607e1"},
+    {file = "nmdmail-0.3.1.tar.gz", hash = "sha256:1d53fe6c400452f5ce85c3ec38af8c17323638d845c8253693c0acedf125599b"},
+]
+
+[package.dependencies]
+beautifulsoup4 = ">=4.11.1,<5.0.0"
+emails = ">=0.6,<0.7"
+lxml = ">=4.9.1,<5.0.0"
+Markdown = ">=3.4.1,<4.0.0"
+premailer = ">=3.10.0,<4.0.0"
 
 [[package]]
 name = "packaging"
@@ -973,6 +973,7 @@ files = [
     {file = "ruamel.yaml.clib-0.2.7-cp310-cp310-win_amd64.whl", hash = "sha256:d000f258cf42fec2b1bbf2863c61d7b8918d31ffee905da62dede869254d3b8a"},
     {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:045e0626baf1c52e5527bd5db361bc83180faaba2ff586e763d3d5982a876a9e"},
     {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-macosx_12_6_arm64.whl", hash = "sha256:721bc4ba4525f53f6a611ec0967bdcee61b31df5a56801281027a3a6d1c2daf5"},
+    {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:41d0f1fa4c6830176eef5b276af04c89320ea616655d01327d5ce65e50575c94"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:4b3a93bb9bc662fc1f99c5c3ea8e623d8b23ad22f861eb6fce9377ac07ad6072"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-macosx_12_0_arm64.whl", hash = "sha256:a234a20ae07e8469da311e182e70ef6b199d0fbeb6c6cc2901204dd87fb867e8"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:15910ef4f3e537eea7fe45f8a5d19997479940d9196f357152a09031c5be59f3"},
@@ -1153,4 +1154,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "04c64865b67116d567bccaf45ed48492f2a146bba8c0b11ca500b8c8e361a322"
+content-hash = "d960b8b6fef397c37dcbf5f6fd7f191f99cd02e7254181459b7916a536cc075e"
