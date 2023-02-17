@@ -29,16 +29,15 @@ jobs:
 
       - name: setup
         run: |
-          pip install poetry psycopg2
-          poetry config virtualenvs.create false --local
-          poetry install --no-interaction --no-ansi
+          pip install psycopg2
+          pipx install poetry
+          poetry install --with dev --no-interaction --no-ansi
 
-      - run: python -Wa ./manage.py migrate
-      - run: PYTHONWARNINGS=always coverage run manage.py test
-      - run: flake8 .
-      - run: yapf -dr .
-      - run: pydocstyle
-      - run: safety check
+      - run: poetry run python -Wa ./manage.py migrate
+      - run: PYTHONWARNINGS=always poetry run coverage run manage.py test
+      - run: poetry run flake8 .
+      - run: poetry run pydocstyle
+      - run: poetry run safety check
       - run: pip install "git+https://github.com/${GITHUB_REPOSITORY}.git#egg=videgrenier"
 
       - uses: codecov/codecov-action@v1
