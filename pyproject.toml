@@ -4,6 +4,7 @@ version = "2.1.0"
 description = "Vide Grenier"
 authors = ["Guilhem Saurel <webmaster@caracole.io>"]
 license = "BSD-2-Clause"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
