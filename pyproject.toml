@@ -19,6 +19,9 @@ safety = "^1.10.3"
 pydocstyle = "^6.0.0"
 coverage = "^5.5"
 
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
