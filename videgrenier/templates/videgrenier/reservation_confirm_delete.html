@@ -1,14 +1,16 @@
 {% extends 'videgrenier.html' %}
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 
 {% block breadpage %}Suppression de réservation{% endblock %}
 
 {% block videgrenier %}
-<form action="" method="post" class="form-horizontal">
+<form action="" method="post" class="form-horizontal" role="form">
   {% csrf_token %}
-  <p class="text-center">Êtes-vous bien sûr de vouloir annuler votre réservation ?<br>
-  <button type="submit" class="btn btn-success">Oui</button> -
-  <a class="btn btn-danger" href="{% url 'videgrenier:home' %}">NON !</a>
+  <p class="text-center">Êtes-vous bien sûr de vouloir annuler votre réservation ?</p>
+  <p class="text-center">
+    {% url 'videgrenier:home' as url_home %}
+    {% bootstrap_button "Oui" button_class="btn-success" button_type="submit" %}
+    {% bootstrap_button "NON !" button_class="btn-danger" href=url_home %}
   </p>
 </form>
 {% endblock %}

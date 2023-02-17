@@ -1,5 +1,5 @@
 {% extends 'videgrenier.html' %}
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 
 {% block breadpage %}Réservation{% endblock %}
 
@@ -8,10 +8,10 @@
 <form action="" method="post" class="form-horizontal">
   {% csrf_token %}
   {% for form in forms %}
-  {% bootstrap_form form layout="horizontal" %}
+    {% bootstrap_form form layout="horizontal" %}
   {% endfor %}
-  {% buttons layout="horizontal" %}
-  <p class="text-center"><button type="submit" class="btn btn-primary">Réserver !</button></p>
-  {% endbuttons %}
+  <p class="text-center">
+    {% bootstrap_button "Réserver !" button_type="submit" button_class="btn-primary" %}
+  </p>
 </form>
 {% endblock %}

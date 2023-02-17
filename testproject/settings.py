@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django.contrib.sites',
-    'bootstrap4',
+    'django_bootstrap5',
     'ndh',
     'testproject',
 ]
@@ -125,3 +125,5 @@ DATES_VIDE_GRENIER = {
 NDH_TEMPLATES_SETTINGS = [
     'DATES_VIDE_GRENIER',
 ]
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
