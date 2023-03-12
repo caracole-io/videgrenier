@@ -4,4 +4,5 @@ from django.apps import AppConfig
 
 class VidegrenierConfig(AppConfig):
     """App Configuration for Vide Grenier."""
-    name = 'videgrenier'
+
+    name = "videgrenier"
