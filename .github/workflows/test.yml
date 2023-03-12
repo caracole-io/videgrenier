@@ -35,7 +35,7 @@ jobs:
 
       - run: poetry run python -Wa ./manage.py migrate
       - run: PYTHONWARNINGS=always poetry run coverage run manage.py test
-      - run: poetry run flake8 .
+      - run: poetry run ruff .
       - run: poetry run safety check
       - run: pip install "git+https://github.com/${GITHUB_REPOSITORY}.git#egg=videgrenier"
 
