@@ -87,7 +87,7 @@ class VideGrenierTests(TestCase):
         # la réservation vient d`être créée, gros mail
         email_user = mail.outbox[-1]
         self.assertEqual(email_user.to, ["a@example.org"])
-        self.assertIn("Vous avez effectué une demande d`inscription", email_user.body)
+        self.assertIn("Vous avez effectué une demande d’inscription", email_user.body)
 
         # d refuse la réservation: la réservation est refusée,
         # a & c reçoivent des mails correspondants
