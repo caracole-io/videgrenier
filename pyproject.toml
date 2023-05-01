@@ -26,7 +26,7 @@ optional = true
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
-coverage = "^7.2.3"
+coverage = "^7.2.5"
 isort = "^5.12.0"
 pygments-zenburn = "^0.9.0"
 ruff = "^0.0.261"
