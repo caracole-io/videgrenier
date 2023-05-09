@@ -169,7 +169,8 @@ def csview(request: HttpRequest) -> HttpResponse:
                 f"{reservation.birthdate} à {reservation.birthplace}",
                 reservation.address,
                 reservation.phone_number,
-                f"n°{reservation.id_num} delivrée le {reservation.id_date} par {reservation.id_org}",
+                f"n°{reservation.id_num} delivrée le {reservation.id_date} "
+                f"par {reservation.id_org}",
                 reservation.plaque,
                 reservation.emplacements,
                 reservation.nature,
