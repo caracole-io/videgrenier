@@ -29,7 +29,7 @@ black = "^23.3.0"
 coverage = "^7.2.7"
 isort = "^5.12.0"
 pygments-zenburn = "^0.9.0"
-ruff = "^0.0.272"
+ruff = "^0.0.286"
 safety = {allow-prereleases = true, version = "^2.4.0b1"}
 
 [tool.ruff]
