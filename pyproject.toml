@@ -25,7 +25,7 @@ python = "^3.10"
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
+black = "^23.9.1"
 coverage = "^7.2.7"
 isort = "^5.12.0"
 pygments-zenburn = "^0.9.0"
