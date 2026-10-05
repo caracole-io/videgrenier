@@ -1,4 +1,5 @@
 """Vide Grenier app declaration."""
+
 from django.apps import AppConfig
 
 
