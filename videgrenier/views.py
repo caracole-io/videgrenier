@@ -1,4 +1,5 @@
 """Vide Grenier views."""
+
 import csv
 from datetime import date
 from typing import Any
@@ -18,7 +19,6 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
-
 from ndh.utils import query_sum
 
 from .forms import ReservationForm, UserForm
@@ -81,7 +81,7 @@ class ReservationDeleteView(ReservationUserMixin, DeleteView):
 class ReservationDetailView(ReservationUserMixin, DetailView):
     """Show a Reservation details to its User."""
 
-    object: Reservation  # noqa: A003
+    object: Reservation
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         """Get infos for the User and its Reservation."""
