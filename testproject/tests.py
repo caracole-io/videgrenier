@@ -1,4 +1,5 @@
 """Main test module."""
+
 from datetime import date, timedelta
 from random import randint
 from typing import Any
